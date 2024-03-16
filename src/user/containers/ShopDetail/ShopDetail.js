@@ -1,10 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 function ShopDetail(props) {
 
+  // const [shopDetail, setShopDetail] = useState({});
+
   const {id} = useParams()
   console.log(id);
+
+  // const getdata = async () => {
+  //   try {
+  //     const response = await fetch("http://localhost:8000/fruites");
+  //     const data = await response.json();
+  //     console.log(data);
+
+  //     const shopDetailData = data.find((v) => v.id === id);
+  //     setShopDetail(shopDetailData);
+
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // }
+
+
+  // useEffect(() => {
+  //   getdata();  
+  // }, [])
 
   return (
     <div>
