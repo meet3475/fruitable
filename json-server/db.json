@@ -4,7 +4,7 @@
             "id": 1,
             "name": "Grapes",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
+            "price": 6.99,
             "image": "img/fruite-item-5.jpg"
         },
         {
@@ -18,7 +18,7 @@
             "id": 3,
             "name": "Raspberries",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
+            "price": 7.99,
             "image": "img/fruite-item-2.jpg"
         },
         {
@@ -61,7 +61,7 @@
             "name": "Oranges",
             "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
             "price": 4.99,
-            "image": "img/fruite-item-5.jpg"
+            "image": "img/fruite-item-1.jpg"
         }
     ]
 }

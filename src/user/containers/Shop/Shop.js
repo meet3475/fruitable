@@ -4,24 +4,51 @@ import { Link } from 'react-router-dom';
 
 function Shop(props) {
 
+
   const [fruitData, setFruitData] = useState([]);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState([]);
+  const [selectedCategoy, setSelectedCategory] = useState("");
 
 
   const getdata = async () => {
-    try {
       const response = await fetch("http://localhost:8000/fruites");
       const data = await response.json();
       setFruitData(data);
-    } catch (error) {
-      console.log(error.message);
-    }
+
+    // let uniqCategory = [];
+    // data.map((v) => {
+    //   if (!uniqCategory.includes(v.name)) {
+    //     uniqCategory.push(v.name);
+    //   }
+    // }
+   // setFruitData(data);
+    // setCategory(uniqCategory);
   }
+
+  const handleSearch = () => {
+    let Fdata = [];
+    Fdata = fruitData.filter((v) => (
+      v.name.toLowerCase().includes(search.toLowerCase()) ||
+      v.price.toString().includes(search) ||
+      v.description.toLowerCase().includes(search.toLowerCase())
+    ))
+
+    if (selectedCategoy) {
+      Fdata = Fdata.filter((v) => v.name === selectedCategoy);
+    }
+
+    return Fdata;
+  }
+
+  const FindData = handleSearch();
 
 
   useEffect(() => {
     getdata()
   }, [])
 
+  // console.log(search);
 
   return (
     <div>
@@ -62,7 +89,13 @@ function Shop(props) {
               <div className="row g-4">
                 <div className="col-xl-3">
                   <div className="input-group w-100 mx-auto d-flex">
-                    <input type="search" className="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1" />
+                    <input
+                      type="search"
+                      className="form-control p-3"
+                      placeholder="keywords"
+                      aria-describedby="search-icon-1"
+                      onChange={(event) => setSearch(event.target.value)} />
+
                     <span id="search-icon-1" className="input-group-text p-3"><i className="fa fa-search" /></span>
                   </div>
                 </div>
@@ -85,13 +118,16 @@ function Shop(props) {
                     <div className="col-lg-12">
                       <div className="mb-3">
                         <h4>Categories</h4>
-                        <ul className="list-unstyled fruite-categorie">
+                        {/* <ul className="list-unstyled fruite-categorie">
                           <li>
                             <div className="d-flex justify-content-between fruite-name">
-                              <a href="#"><i className="fas fa-apple-alt me-2" />Apples</a>
+
                               <span>(3)</span>
                             </div>
                           </li>
+                        </ul> */}
+
+                        {/* <ul className="list-unstyled fruite-categorie">
                           <li>
                             <div className="d-flex justify-content-between fruite-name">
                               <a href="#"><i className="fas fa-apple-alt me-2" />Oranges</a>
@@ -100,7 +136,7 @@ function Shop(props) {
                           </li>
                           <li>
                             <div className="d-flex justify-content-between fruite-name">
-                              <a href="#"><i className="fas fa-apple-alt me-2" />Strawbery</a>
+                              <a href="#"><i className="fas fa-apple-alt me-2" />Grapes</a>
                               <span>(2)</span>
                             </div>
                           </li>
@@ -112,11 +148,31 @@ function Shop(props) {
                           </li>
                           <li>
                             <div className="d-flex justify-content-between fruite-name">
-                              <a href="#"><i className="fas fa-apple-alt me-2" />Pumpkin</a>
+                              <a href="#"><i className="fas fa-apple-alt me-2" />Raspberries</a>
                               <span>(5)</span>
                             </div>
                           </li>
-                        </ul>
+                          <li>
+                            <div className="d-flex justify-content-between fruite-name">
+                              <a href="#"><i className="fas fa-apple-alt me-2" />Apricots</a>
+                              <span>(5)</span>
+                            </div>
+                          </li>
+                        </ul> */}
+
+                        <a href="#" onClick={() => setSelectedCategory("")}>
+                          <i className="fas fa-apple-alt me-2" />All
+                        </a>
+
+
+                        {
+                          category.map((v) => (
+                            <a href="#" onClick={() => setSelectedCategory(v.name)}>
+                               <i className="fas fa-apple-alt me-2" />{v}
+                            </a>
+
+                          ))
+                        }
                       </div>
                     </div>
                     <div className="col-lg-12">
@@ -227,38 +283,39 @@ function Shop(props) {
                 <div className="col-lg-9">
                   <div className="row g-4 justify-content-center">
                     {
-                      fruitData.map((v) => (
+                      FindData.map((v) => (
                         <div className="col-md-6 col-lg-6 col-xl-4">
                           <Link to={`/Shop/${v.id}`}>
-                          <div className="rounded position-relative fruite-item">
-                            <div className="fruite-img">
-                              <img src={v.image} className="img-fluid w-100 rounded-top" alt />
-                            </div>
-                            <div className="text-white bg-secondary px-3 py-1 rounded position-absolute" style={{ top: 10, left: 10 }}>Fruits</div>
-                            <div className="p-4 border border-secondary border-top-0 rounded-bottom">
-                              <h4>{v.name}</h4>
-                              <p>{v.description}</p>
-                              <div className="d-flex justify-content-between flex-lg-wrap">
-                                <p className="text-dark fs-5 fw-bold mb-0">${v.price} / kg</p>
-                                <a href="#" className="btn border border-secondary rounded-pill px-3 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
+                            <div className="rounded position-relative fruite-item">
+                              <div className="fruite-img">
+                                <img src={v.image} className="img-fluid w-100 rounded-top" alt />
+                              </div>
+                              <div className="text-white bg-secondary px-3 py-1 rounded position-absolute" style={{ top: 10, left: 10 }}>Fruits</div>
+                              <div className="p-4 border border-secondary border-top-0 rounded-bottom">
+                                <h4>{v.name}</h4>
+                                <p>{v.description}</p>
+                                <div className="d-flex justify-content-between flex-lg-wrap">
+                                  <p className="text-dark fs-5 fw-bold mb-0">${v.price} / kg</p>
+                                  <a href="#" className="btn border border-secondary rounded-pill px-3 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </Link>
+                          </Link>
                         </div>
 
-                  ))
+                      ))
                     }
-                  <div className="col-12">
-                    <div className="pagination d-flex justify-content-center mt-5">
-                      <a href="#" className="rounded">«</a>
-                      <a href="#" className="active rounded">1</a>
-                      <a href="#" className="rounded">2</a>
-                      <a href="#" className="rounded">3</a>
-                      <a href="#" className="rounded">4</a>
-                      <a href="#" className="rounded">5</a>
-                      <a href="#" className="rounded">6</a>
-                      <a href="#" className="rounded">»</a>
+                    <div className="col-12">
+                      <div className="pagination d-flex justify-content-center mt-5">
+                        <a href="#" className="rounded">«</a>
+                        <a href="#" className="active rounded">1</a>
+                        <a href="#" className="rounded">2</a>
+                        <a href="#" className="rounded">3</a>
+                        <a href="#" className="rounded">4</a>
+                        <a href="#" className="rounded">5</a>
+                        <a href="#" className="rounded">6</a>
+                        <a href="#" className="rounded">»</a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -267,8 +324,7 @@ function Shop(props) {
           </div>
         </div>
       </div>
-    </div>
-      {/* Fruits Shop End*/ }
+      {/* Fruits Shop End*/}
     </div >
 
   );
