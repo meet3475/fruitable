@@ -10,6 +10,7 @@ import Page from '../../user/containers/Page/Page';
 import Contact from '../../user/containers/Contact/Contact';
 import Footer from '../../user/components/Footer/Footer';
 import ShopDetail from '../../user/containers/ShopDetail/ShopDetail';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
 
 
 function UserRoute(props) {
@@ -19,8 +20,13 @@ function UserRoute(props) {
                 <Header />
                 <Routes>
                     <Route exact path="/" element={<Home />} />
-                    <Route exact path="/Shop" element={<Shop />} />
-                    <Route exact path="/Shop/:id" element={<ShopDetail />} />
+
+                    <Route element={<PrivateRoute />}>
+                        <Route exact path="/Shop" element={<Shop />} />
+                        <Route exact path="/Shop/:id" element={<ShopDetail />} />
+                    </Route>
+
+
                     {/* <Route exact path="/Shop_Detail" element={<Shop_Detail />} /> */}
 
                     <Route exact path="/Cart" element={<Cart />} />
