@@ -1,6 +1,31 @@
 import React from 'react';
+import { object, string, number, date, InferType } from 'yup';
+import { useFormik } from 'formik';
+
 
 function Contact(props) {
+    let contactSchema = object({
+        name: string().required("Please entre name"),
+        email: string().required("Please entre Email").email("Please entre valid Email"),
+        message: string().required().min(5, "Please entre minimum 5 charactrer in message"),
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            email: '',
+            message: '',
+        },
+
+        validationSchema: contactSchema,
+
+        onSubmit: values => {
+            alert(JSON.stringify(values, null, 2));
+        },
+    });
+
+    const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
+
     return (
         <div>
             {/* Modal Search Start */}
@@ -48,10 +73,44 @@ function Contact(props) {
                                 </div>
                             </div>
                             <div className="col-lg-7">
-                                <form action className>
-                                    <input type="text" className="w-100 form-control border-0 py-3 mb-4" placeholder="Your Name" />
-                                    <input type="email" className="w-100 form-control border-0 py-3 mb-4" placeholder="Enter Your Email" />
-                                    <textarea className="w-100 form-control border-0 mb-4" rows={5} cols={10} placeholder="Your Message" defaultValue={""} />
+                                <form onSubmit={handleSubmit}>
+                                    <input
+                                        type="text"
+                                        className="w-100 form-control border-0 py-3 mb-4"
+                                        placeholder="Your Name"
+                                        name='name'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.name}
+                                    />
+                                    <span className='error'>
+                                        {errors.name && touched.name ? errors.name : ''}
+                                    </span>
+                                    <input
+                                        type="email"
+                                        className="w-100 form-control border-0 py-3 mb-4"
+                                        placeholder="Enter Your Email"
+                                        name='email'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.email}
+                                    />
+                                    <span className='error'>
+                                        {errors.email && touched.email ? errors.email : ''}
+                                    </span>
+                                    <textarea
+                                        className="w-100 form-control border-0 mb-4"
+                                        rows={5} cols={10}
+                                        placeholder="Your Message"
+                                        name='message'
+                                        defaultValue={""}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.message}
+                                    />
+                                    <span className='error'>
+                                        {errors.message && touched.message ? errors.message : ''}
+                                    </span>
                                     <button className="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="submit">Submit</button>
                                 </form>
                             </div>
