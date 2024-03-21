@@ -7,12 +7,22 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { object, string, number, date, InferType } from 'yup';
+import { object, string } from 'yup';
 import { useFormik } from 'formik';
+
+import { DataGrid } from '@mui/x-data-grid';
+
+const columns = [
+    { field:'category_name', headerName: 'Name', width: 70 },
+    { field:'category_description', headerName: 'Description', width: 130 },  
+];
+
+
 
 export default function Catagory() {
     const [open, setOpen] = React.useState(false);
-
+    const [data, setData] = React.useState([]);
+    console.log(data);
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -21,96 +31,124 @@ export default function Catagory() {
         setOpen(false);
     };
 
+    const getData = () => {
+        const localData = JSON.parse(localStorage.getItem("category"));
+
+        if (localData) {
+            setData(localData)
+        }
+    }
+
+    React.useEffect(() => {
+        getData();
+    }, [])
+
+
+    const handleAdd = (data) => {
+        console.log(data);
+        let localData = JSON.parse(localStorage.getItem("category"));
+        let rNo = Math.floor(Math.random() * 1000);
+
+        if (localData) {
+            localData.push({ ...data, id: rNo });
+            localStorage.setItem("category", JSON.stringify(localData));
+        } else {
+            localStorage.setItem("category", JSON.stringify([{ ...data, id: rNo }]));
+        }
+        getData();
+    }
+
 
     let catagorySchema = object({
-        name: string().required("Please entre name"),
-        description: string().required("Please entre description").min(5, "Please entre minimum 5 charactrer in message"),
+        category_name: string().required("Please entre name"),
+        category_description: string().required("Please entre description").min(5, "Please entre minimum 5 charactrer in message"),
     });
 
     const formik = useFormik({
         initialValues: {
-            name: '',
-            description: '',
+            category_name: '',
+            category_description: '',
         },
 
         validationSchema: catagorySchema,
 
-        onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit: (values, { resetForm }) => {
+            resetForm();
+            handleAdd(values)
         },
     });
 
     const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
 
+    
+    
     return (
-        <React.Fragment>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Open form Product
-            </Button>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                PaperProps={{
-                    component: 'form',
-                    onSubmit: (event) => {
-                        event.preventDefault();
-                        const formData = new FormData(event.currentTarget);
-                        const formJson = Object.fromEntries(formData.entries());
-                        const email = formJson.email;
-                        console.log(email);
-                        handleClose();
-                    },
-                }}
-            >
-                <DialogTitle>Subscribe</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        To subscribe to this website, please enter your email address here. We
-                        will send updates occasionally.
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        required
-                        margin="dense"
-                        id="name"
-                        name="name"
-                        label="Name"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.name}
-                    />
-                    <span className='error'>
-                        {errors.name && touched.name ? errors.name : ''}
-                    </span>
-                    <TextField
-                        autoFocus
-                        required
-                        margin="dense"
-                        id="name"
-                        name="description"
-                        label="Description"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.description}
-                    />
-                    <span className='error'>
-                        {errors.description && touched.description ? errors.description : ''}
-                    </span>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button 
-                    type="submit"
-                    onSubmit={handleSubmit}
-                    >Submit</Button>
-                </DialogActions>
-            </Dialog>
-        </React.Fragment>
+        <>
+            <React.Fragment>
+                <Button variant="outlined" onClick={handleClickOpen}>
+                    Category
+                </Button>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                >
+                    <DialogTitle>Category</DialogTitle>
+                    <form onSubmit={handleSubmit}>
+                        <DialogContent>
+                            <TextField
+                                margin="dense"
+                                id="name"
+                                name="category_name"
+                                label="Category Name"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.category_name}
+                                error={errors.category_name && touched.category_name ? true : false}
+                                helperText={errors.category_name && touched.category_name ? errors.category_name : ''}
+                            />
+                            <TextField
+                                margin="dense"
+                                id="name"
+                                name="category_description"
+                                label="Category Description"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.category_description}
+                                error={errors.category_description && touched.category_description ? true : false}
+                                helperText={errors.category_description && touched.category_description ? errors.category_description : ''}
+                            />
+                            <DialogActions>
+                                <Button onClick={handleClose}>Cancel</Button>
+                                <Button
+                                    type="submit"
+                                >Add</Button>
+                            </DialogActions>
+                        </DialogContent>
+                    </form>
+
+
+                </Dialog>
+            </React.Fragment>
+
+            <div style={{ height: 400, width: '100%' }}>
+                <DataGrid
+                    rows={data}
+                    columns={columns}
+                    initialState={{
+                        pagination: {
+                            paginationModel: { page: 0, pageSize: 5 },
+                        },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                    checkboxSelection
+                />
+            </div>
+        </>
     );
 }
