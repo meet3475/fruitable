@@ -7,21 +7,21 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import { object, string } from 'yup';
 import { useFormik } from 'formik';
 
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 
-const columns = [
-    { field:'category_name', headerName: 'Name', width: 70 },
-    { field:'category_description', headerName: 'Description', width: 130 },  
-];
 
 
 
 export default function Catagory() {
     const [open, setOpen] = React.useState(false);
     const [data, setData] = React.useState([]);
+
     console.log(data);
     const handleClickOpen = () => {
         setOpen(true);
@@ -58,6 +58,13 @@ export default function Catagory() {
         getData();
     }
 
+    const handleDelete = (id) => {
+        const editData = data.filter(item => item.id !== id);
+
+        localStorage.setItem("category", JSON.stringify(editData));
+        setData(editData);
+    }
+
 
     let catagorySchema = object({
         category_name: string().required("Please entre name"),
@@ -75,11 +82,24 @@ export default function Catagory() {
         onSubmit: (values, { resetForm }) => {
             resetForm();
             handleAdd(values)
+            handleClose();
         },
     });
 
     const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
 
+    const columns = [
+        { field:'category_name', headerName: 'Name', width: 70 },
+        { field:'category_description', headerName: 'Description', width: 130 },  
+        { field:'actions', type:'actions', headerName: 'Action', width: 130, getActions: ({id}) => [
+            <GridActionsCellItem
+                icon={<DeleteIcon />}   
+                label='Delete'
+                onClick={() => handleDelete(id)}    
+            />
+        ] },  
+    ];
+    
     
     
     return (
