@@ -7,13 +7,15 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-
-import DeleteIcon from '@mui/icons-material/Delete';
-
 import { object, string } from 'yup';
 import { useFormik } from 'formik';
 
-import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
+
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 
 
@@ -21,15 +23,48 @@ import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 export default function Catagory() {
     const [open, setOpen] = React.useState(false);
     const [data, setData] = React.useState([]);
+    const [update, setUpdate] = React.useState(null);
 
-    console.log(data);
+    // console.log(data);
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
+        formik.resetForm();
+        setUpdate(null);
     };
+
+    let catagorySchema = object({
+        category_name: string().required("Please entre name"),
+        category_description: string().required("Please entre description").min(5, "Please entre minimum 5 charactrer in message"),
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            category_name: '',
+            category_description: '',
+        },
+
+        validationSchema: catagorySchema,
+
+        onSubmit: (values, { resetForm }) => {
+
+            if (update) {
+                handleUpdateData(values)
+            } else {
+                handleAdd(values)
+            }
+
+            resetForm();
+            handleClose();
+        },
+    });
+
+
+    const { handleSubmit, handleChange, handleBlur, errors, touched, values, setValues } = formik;
+
 
     const getData = () => {
         const localData = JSON.parse(localStorage.getItem("category"));
@@ -58,50 +93,63 @@ export default function Catagory() {
         getData();
     }
 
-    const handleDelete = (id) => {
-        const editData = data.filter(item => item.id !== id);
 
-        localStorage.setItem("category", JSON.stringify(editData));
-        setData(editData);
+    const handleDelete = (data) => {
+        let localData = JSON.parse(localStorage.getItem("category"));
+
+        let fData = localData.filter((v) => v.id !== data.id);
+
+        localStorage.setItem("category", JSON.stringify(fData));
+
+        getData();
     }
 
+    const handlEdit = (data) => {
+        // console.log(data);
+        setOpen(true);
+        setValues(data);
+        setUpdate(data.id);
+    }
 
-    let catagorySchema = object({
-        category_name: string().required("Please entre name"),
-        category_description: string().required("Please entre description").min(5, "Please entre minimum 5 charactrer in message"),
-    });
+    const handleUpdateData = (data) => {
 
-    const formik = useFormik({
-        initialValues: {
-            category_name: '',
-            category_description: '',
-        },
+        let localData = JSON.parse(localStorage.getItem("category"));
 
-        validationSchema: catagorySchema,
+        let index = localData.findIndex((v) => v.id === data.id);
 
-        onSubmit: (values, { resetForm }) => {
-            resetForm();
-            handleAdd(values)
-            handleClose();
-        },
-    });
+        localData[index] = data;
 
-    const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
+        localStorage.setItem("category", JSON.stringify(localData));
+
+        getData();
+    }
 
     const columns = [
-        { field:'category_name', headerName: 'Name', width: 70 },
-        { field:'category_description', headerName: 'Description', width: 130 },  
-        { field:'actions', type:'actions', headerName: 'Action', width: 130, getActions: ({id}) => [
-            <GridActionsCellItem
-                icon={<DeleteIcon />}   
-                label='Delete'
-                onClick={() => handleDelete(id)}    
-            />
-        ] },  
+        { field: 'category_name', headerName: 'Name', width: 130 },
+        { field: 'category_description', headerName: 'Description', width: 130 },
+        {
+            field: 'Action',
+            headerName: 'Action',
+            width: 130,
+            renderCell: (params) => (
+                <>
+                    <IconButton aria-label="delete" size="large" onClick={() => handlEdit(params.row)}>
+                        <EditIcon />
+                    </IconButton>
+
+                    <IconButton aria-label="delete" size="large" onClick={() => handleDelete(params.row)}>
+                        <DeleteIcon />
+                    </IconButton>
+                </>
+            )
+
+
+        }
+
     ];
-    
-    
-    
+
+
+
     return (
         <>
             <React.Fragment>
@@ -147,7 +195,7 @@ export default function Catagory() {
                                 <Button onClick={handleClose}>Cancel</Button>
                                 <Button
                                     type="submit"
-                                >Add</Button>
+                                >{update ? 'Update' : 'Add'}</Button>
                             </DialogActions>
                         </DialogContent>
                     </form>

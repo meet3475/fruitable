@@ -91,12 +91,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 let adminlink = [
-    {title:"Product", icon:< AppleIcon/>, to:"/admine/product"},
-    {title:"Review", icon:< RateReviewIcon/>, to:"/admine/review"},
-    {title:"Catagory", icon:< CategoryIcon/>, to:"/admine/catagory"}
+  { title: "Catagory", icon: < CategoryIcon />, to: "/admine/catagory" },
+  { title: "Product", icon: < AppleIcon />, to: "/admine/product" },
+  { title: "Review", icon: < RateReviewIcon />, to: "/admine/review" }
+
 ]
 
-export default function Layout({children}) {
+export default function Layout({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -108,7 +109,7 @@ export default function Layout({children}) {
     setOpen(false);
   };
 
-  
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -140,11 +141,11 @@ export default function Layout({children}) {
         <Divider />
         <List>
           {adminlink.map((value, index) => (
-            <ListItem 
-            key={index} 
-            disablePadding sx={{ display: 'block' }}
-            component={NavLink}
-            to={value.to}
+            <ListItem
+              key={index}
+              disablePadding sx={{ display: 'block' }}
+              component={NavLink}
+              to={value.to}
             >
               <ListItemButton
                 sx={{
@@ -171,7 +172,7 @@ export default function Layout({children}) {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-                  {children}
+        {children}
       </Box>
     </Box>
   );
