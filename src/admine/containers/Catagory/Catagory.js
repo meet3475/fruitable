@@ -80,7 +80,7 @@ export default function Catagory() {
 
 
     const handleAdd = (data) => {
-        console.log(data);
+        // console.log(data);
         let localData = JSON.parse(localStorage.getItem("category"));
         let rNo = Math.floor(Math.random() * 1000);
 
@@ -154,7 +154,7 @@ export default function Catagory() {
         <>
             <React.Fragment>
                 <Button variant="outlined" onClick={handleClickOpen}>
-                    Category
+                  Add Category
                 </Button>
                 <Dialog
                     open={open}
