@@ -9,6 +9,7 @@ import { storeReduce } from "./redux/store";
 
 function App() {
   const store = storeReduce();
+  
   return (
     <Provider store={store}>
       <Routes>

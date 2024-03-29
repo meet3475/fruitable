@@ -5,6 +5,7 @@ import Layout from '../../admine/components/Layout/Layout';
 import Review from '../../admine/containers/Review/Review'
 import Catagory from '../../admine/containers/Catagory/Catagory';
 import Facilities from '../../admine/containers/Facilities/Facilities';
+import Counter from '../../admine/containers/Counter/Counter';
 
 function AdmineRoute(props) {
     return (
@@ -15,6 +16,7 @@ function AdmineRoute(props) {
                     <Route exact path="/review" element={<Review />} />
                     <Route exact path="/catagory" element={<Catagory />} />
                     <Route exact path="/facilities" element={<Facilities />} />
+                    <Route exact path="/counter" element={<Counter />} />
                 </Routes>
             </Layout>
         </div>
