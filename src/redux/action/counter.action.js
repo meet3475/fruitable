@@ -7,3 +7,4 @@ export const increse = () => (dispatch) => {
 export const decrese = () => (dispatch) => {
     dispatch({type: DECREMENT_COUNTER})
 }
+

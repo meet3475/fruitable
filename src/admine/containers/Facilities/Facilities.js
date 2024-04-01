@@ -11,11 +11,20 @@ import { object, string, number, date, InferType } from 'yup';
 
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { Addfacilities } from '../../../redux/action/facilities.action';
+import { Addfacilities, Deletefacilities, Updatefacilities } from '../../../redux/action/facilities.action';
+
+import { DataGrid } from '@mui/x-data-grid';
+
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { useState } from 'react';
+
 
 
 function Facilities(props) {
     const [open, setOpen] = React.useState(false);
+    const [update, setUpdate] = useState(false);
 
     const dispatch = useDispatch()
 
@@ -28,6 +37,8 @@ function Facilities(props) {
 
     const handleClose = () => {
         setOpen(false);
+        formik.resetForm();
+        setUpdate(false);
     };
 
     let facilitiesSchema = object({
@@ -37,25 +48,65 @@ function Facilities(props) {
 
     const formik = useFormik({
         initialValues: {
-          name:'',
-          description:''
+            name: '',
+            description: ''
         },
 
-        validationSchema : facilitiesSchema,
+        validationSchema: facilitiesSchema,
 
         onSubmit: (values, { resetForm }) => {
-            dispatch(Addfacilities(values))
-            handleClose();
-            resetForm();
-        },
-      });
+            if (update) {
+                dispatch(Updatefacilities(values))
+            } else {
+                const rNo = Math.floor(Math.random() * 1000);
+                dispatch(Addfacilities({ ...values, id: rNo }))
+            }
 
-      const {handleSubmit, handleChange, handleBlur, values, touched, errors} = formik;
+            resetForm();
+            handleClose();
+
+        },
+    });
+
+    const { handleSubmit, handleChange, handleBlur, values, touched, errors } = formik;
+
+    const handleDelete = (id) => {
+        dispatch(Deletefacilities(id))
+    }
+
+    const handleEdit = (data) => {
+        formik.setValues(data);
+        setOpen(true);
+        setUpdate(true);
+    }
+
+    const columns = [
+        { field: 'name', headerName: 'Facilities Name', width: 170 },
+        { field: 'description', headerName: 'Facilities Description', width: 170 },
+        {
+            field: 'Action',
+            headerName: 'Action',
+            width: 130,
+            renderCell: (params) => (
+                <>
+                    <IconButton aria-label="edit" size="large" onClick={() => handleEdit(params.row)}>
+                        <EditIcon />
+                    </IconButton>
+
+                    <IconButton aria-label="delete" size="large" onClick={() => handleDelete(params.row.id)}>
+                        <DeleteIcon />
+                    </IconButton>
+                </>
+            )
+        }
+
+    ];
+
 
     return (
         <div>
             <Button variant="outlined" onClick={handleClickOpen}>
-               Add Facilities
+                Add Facilities
             </Button>
             <Dialog
                 open={open}
@@ -95,12 +146,27 @@ function Facilities(props) {
                         />
                         <DialogActions>
                             <Button onClick={handleClose}>Cancel</Button>
-                            <Button type="submit">Add</Button>
+                            <Button type="submit">{update ? 'Update' : 'Add'}</Button>
                         </DialogActions>
                     </DialogContent>
                 </form>
 
             </Dialog>
+
+            <div style={{ height: 400, width: '100%' }}>
+                <DataGrid
+                    rows={facilities.facilities}
+                    columns={columns}
+                    initialState={{
+                        pagination: {
+                            paginationModel: { page: 0, pageSize: 5 },
+                        },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                    checkboxSelection
+                />
+            </div>
+
         </div>
     );
 }
