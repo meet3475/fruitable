@@ -1,38 +1,50 @@
-import { ADD_FCILITIES, DELETE_FCILITIES, UPDATE_FCILITIES } from "../ActionTypes";
+import { ADD_FCILITIES, DELETE_FCILITIES, LOADING_FCILITIES, UPDATE_FCILITIES } from "../ActionTypes";
 
 const initialState = {
-    isLoading : false,
+    isLoading: false,
     facilities: [],
     error: null
 }
 
-export const facilitiesReducer = (state=initialState, action) => {
+export const facilitiesReducer = (state = initialState, action) => {
     console.log(action);
 
     switch (action.type) {
+
+        case LOADING_FCILITIES:
+            console.log("loading...");
+            return {
+                ...state,
+                isLoading : true,
+            }
+
         case ADD_FCILITIES:
-          return {
+            return {
                 ...state,
-                facilities : state.facilities.concat(action.payload)
-          }  
+                isLoading : false,
+                facilities: state.facilities.concat(action.payload),
+                
+            }
 
-          case DELETE_FCILITIES:
-          return {
+        case DELETE_FCILITIES:
+            return {
                 ...state,
-                facilities : state.facilities.filter((v) => v.id !== action.payload)
-          }  
+                isLoading : false,
+                facilities: state.facilities.filter((v) => v.id !== action.payload)
+            }
 
-          case UPDATE_FCILITIES:
-          return {
+        case UPDATE_FCILITIES:
+            return {
                 ...state,
-                facilities : state.facilities.map((v) => {
+                isLoading : false,
+                facilities: state.facilities.map((v) => {
                     if (v.id === action.payload.id) {
                         return action.payload
                     } else {
                         return v
                     }
                 })
-          }  
+            }
 
         default:
             return state
