@@ -1,4 +1,5 @@
-import { ADD_FCILITIES, DELETE_FCILITIES, LOADING_FCILITIES, UPDATE_FCILITIES } from "../ActionTypes";
+import { Message } from "@mui/icons-material";
+import { ADD_FCILITIES, DELETE_FCILITIES, ERROR_FCILITIES, GET_FCILITIES, LOADING_FCILITIES, UPDATE_FCILITIES } from "../ActionTypes";
 
 const initialState = {
     isLoading: false,
@@ -16,6 +17,11 @@ export const facilitiesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading : true,
+            }
+
+        case GET_FCILITIES:
+            return {
+                ...state
             }
 
         case ADD_FCILITIES:
