@@ -12,13 +12,21 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { object, string, number, date, InferType } from 'yup';
 
 import { useFormik } from 'formik';
-
-
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getProduct } from '../../../redux/action/product.action';
 
 
 export default function Product() {
     const [open, setOpen] = React.useState(false);
+
+    const dispatch = useDispatch();
+
+    const product = useSelector(state => state.product)
+
+    React.useEffect(() => {
+        dispatch(getProduct())
+    }, [])
+
 
 
     const handleClickOpen = () => {
@@ -32,8 +40,8 @@ export default function Product() {
     let productSchema = object({
         name: string().required(),
         description: string().required(),
-        price: number().required().positive(),
-        image: string().required()
+        price: number().required(),
+       
     });
 
 
@@ -42,7 +50,7 @@ export default function Product() {
             name: '',
             description: '',
             price: '',
-            image: ''
+           
         },
         validationSchema: productSchema,
         onSubmit: (values, { resetForm }) => {
@@ -55,24 +63,13 @@ export default function Product() {
     const { handleSubmit, handleChange, handleBlur, values, touched, errors } = formik;
 
     const columns = [
-        { field: 'name', headerName: 'Name', width: 70 },
+        { field: 'name', headerName: 'Name', width: 130 },
         { field: 'description', headerName: 'Description', width: 130 },
         { field: 'price', headerName: 'Price', width: 130 },
-        { field: 'image', headerName: 'Image', width: 130 },
-
+        
     ];
 
-    const rows = [
-        { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    ];
+    
 
 
     return (
@@ -123,7 +120,7 @@ export default function Product() {
                                 id="price"
                                 name="price"
                                 label="Product Price"
-                                type="number"
+                                type="text"
                                 fullWidth
                                 variant="standard"
                                 onChange={handleChange}
@@ -133,20 +130,6 @@ export default function Product() {
                                 helperText={errors.price && touched.price ? errors.price : ''}
                             />
 
-                            <TextField
-                                margin="dense"
-                                id="image"
-                                name="image"
-                                label="Product Image"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.image}
-                                error={errors.image && touched.image ? true : false}
-                                helperText={errors.image && touched.image ? errors.image : ''}
-                            />
 
                             <DialogActions>
                                 <Button onClick={handleClose}>Cancel</Button>
@@ -161,7 +144,7 @@ export default function Product() {
 
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={rows}
+                    rows={product.product}
                     columns={columns}
                     initialState={{
                         pagination: {
