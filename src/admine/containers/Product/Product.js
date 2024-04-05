@@ -14,6 +14,7 @@ import { object, string, number, date, InferType } from 'yup';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProduct } from '../../../redux/action/product.action';
+import { Spinner } from 'reactstrap';
 
 
 export default function Product() {
@@ -41,7 +42,7 @@ export default function Product() {
         name: string().required(),
         description: string().required(),
         price: number().required(),
-       
+
     });
 
 
@@ -50,7 +51,7 @@ export default function Product() {
             name: '',
             description: '',
             price: '',
-           
+
         },
         validationSchema: productSchema,
         onSubmit: (values, { resetForm }) => {
@@ -66,95 +67,105 @@ export default function Product() {
         { field: 'name', headerName: 'Name', width: 130 },
         { field: 'description', headerName: 'Description', width: 130 },
         { field: 'price', headerName: 'Price', width: 130 },
-        
+
     ];
 
-    
+
 
 
     return (
         <>
-            <React.Fragment>
-                <Button variant="outlined" onClick={handleClickOpen}>
-                    Add Product
-                </Button>
-                <Dialog
-                    open={open}
-                    onClose={handleClose}
-                >
-                    <DialogTitle>Product</DialogTitle>
-                    <form onSubmit={handleSubmit}>
-                        <DialogContent>
-                            <TextField
-                                margin="dense"
-                                id="name"
-                                name="name"
-                                label="Product name"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.name}
-                                error={errors.name && touched.name ? true : false}
-                                helperText={errors.name && touched.name ? errors.name : ''}
+            {
+                product.isLoading ?
+                    <Spinner>
+                        Loading...
+                    </Spinner> :
+                    <>
+                        <React.Fragment>
+                            <Button variant="outlined" onClick={handleClickOpen}>
+                                Add Product
+                            </Button>
+                            <Dialog
+                                open={open}
+                                onClose={handleClose}
+                            >
+                                <DialogTitle>Product</DialogTitle>
+                                <form onSubmit={handleSubmit}>
+                                    <DialogContent>
+                                        <TextField
+                                            margin="dense"
+                                            id="name"
+                                            name="name"
+                                            label="Product name"
+                                            type="text"
+                                            fullWidth
+                                            variant="standard"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.name}
+                                            error={errors.name && touched.name ? true : false}
+                                            helperText={errors.name && touched.name ? errors.name : ''}
+                                        />
+
+                                        <TextField
+                                            margin="dense"
+                                            id="description"
+                                            name="description"
+                                            label="Product Description"
+                                            type="text"
+                                            fullWidth
+                                            variant="standard"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.description}
+                                            error={errors.description && touched.description ? true : false}
+                                            helperText={errors.description && touched.description ? errors.description : ''}
+                                        />
+
+                                        <TextField
+                                            margin="dense"
+                                            id="price"
+                                            name="price"
+                                            label="Product Price"
+                                            type="text"
+                                            fullWidth
+                                            variant="standard"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.price}
+                                            error={errors.price && touched.price ? true : false}
+                                            helperText={errors.price && touched.price ? errors.price : ''}
+                                        />
+
+
+                                        <DialogActions>
+                                            <Button onClick={handleClose}>Cancel</Button>
+                                            <Button type="submit">Add</Button>
+                                        </DialogActions>
+
+                                    </DialogContent>
+                                </form>
+
+                            </Dialog>
+                        </React.Fragment>
+
+                        <div style={{ height: 400, width: '100%' }}>
+                            <DataGrid
+                                rows={product.product}
+                                columns={columns}
+                                initialState={{
+                                    pagination: {
+                                        paginationModel: { page: 0, pageSize: 5 },
+                                    },
+                                }}
+                                pageSizeOptions={[5, 10]}
+                                checkboxSelection
                             />
+                        </div>
+                    </>
 
-                            <TextField
-                                margin="dense"
-                                id="description"
-                                name="description"
-                                label="Product Description"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.description}
-                                error={errors.description && touched.description ? true : false}
-                                helperText={errors.description && touched.description ? errors.description : ''}
-                            />
+            }
 
-                            <TextField
-                                margin="dense"
-                                id="price"
-                                name="price"
-                                label="Product Price"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.price}
-                                error={errors.price && touched.price ? true : false}
-                                helperText={errors.price && touched.price ? errors.price : ''}
-                            />
-
-
-                            <DialogActions>
-                                <Button onClick={handleClose}>Cancel</Button>
-                                <Button type="submit">Add</Button>
-                            </DialogActions>
-
-                        </DialogContent>
-                    </form>
-
-                </Dialog>
-            </React.Fragment>
-
-            <div style={{ height: 400, width: '100%' }}>
-                <DataGrid
-                    rows={product.product}
-                    columns={columns}
-                    initialState={{
-                        pagination: {
-                            paginationModel: { page: 0, pageSize: 5 },
-                        },
-                    }}
-                    pageSizeOptions={[5, 10]}
-                    checkboxSelection
-                />
-            </div>
         </>
 
     );
