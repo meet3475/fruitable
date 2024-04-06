@@ -1,10 +1,21 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getShopDetail } from '../../../redux/action/shopDetail.action';
 
 function ShopDetail(props) {
 
-  const {id} = useParams()
+  const { id } = useParams()
   console.log(id);
+
+  const dispatch = useDispatch();
+
+  const reviews = useSelector(state => state.reviews)
+
+  React.useEffect(() => {
+    dispatch(getShopDetail())
+  }, [])
+
 
   return (
     <div>
@@ -200,6 +211,20 @@ function ShopDetail(props) {
                     </div>
                   </div>
                 </form>
+                <div>
+                  { 
+                    reviews.reviews.map((v, i) => (
+                      <div>
+                        <h1>{v.pid}</h1>
+                        <h2>{v.name}</h2>
+                        <h4>{v.id}</h4>
+                        <h5>{v.email}</h5>
+                        <h6>{v.review}</h6>
+                        <p>{v.rating}</p>
+                      </div>
+                    ))
+                  }
+                </div>
               </div>
             </div>
             <div className="col-lg-4 col-xl-3">

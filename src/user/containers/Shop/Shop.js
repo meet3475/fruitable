@@ -1,25 +1,35 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getShop } from '../../../redux/action/shop.action';
 
 function Shop(props) {
 
   const [fruitData, setFruitData] = useState([]);
 
 
-  const getdata = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/fruites");
-      const data = await response.json();
-      setFruitData(data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
+  // const getdata = async () => {
+  //   try {
+  //     const response = await fetch("http://localhost:8000/fruites");
+  //     const data = await response.json();
+  //     setFruitData(data);
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // }
 
 
-  useEffect(() => {
-    getdata()
+  // useEffect(() => {
+  //   getdata()
+  // }, [])
+
+  const dispatch = useDispatch();
+
+  const fruites = useSelector(state => state.fruites)
+
+  React.useEffect(() => {
+    dispatch(getShop())
   }, [])
 
 
@@ -227,38 +237,39 @@ function Shop(props) {
                 <div className="col-lg-9">
                   <div className="row g-4 justify-content-center">
                     {
-                      fruitData.map((v) => (
+                      fruites.fruites.map((v) => (
                         <div className="col-md-6 col-lg-6 col-xl-4">
                           <Link to={`/Shop/${v.id}`}>
-                          <div className="rounded position-relative fruite-item">
-                            <div className="fruite-img">
-                              <img src={v.image} className="img-fluid w-100 rounded-top" alt />
-                            </div>
-                            <div className="text-white bg-secondary px-3 py-1 rounded position-absolute" style={{ top: 10, left: 10 }}>Fruits</div>
-                            <div className="p-4 border border-secondary border-top-0 rounded-bottom">
-                              <h4>{v.name}</h4>
-                              <p>{v.description}</p>
-                              <div className="d-flex justify-content-between flex-lg-wrap">
-                                <p className="text-dark fs-5 fw-bold mb-0">${v.price} / kg</p>
-                                <a href="#" className="btn border border-secondary rounded-pill px-3 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
+                            <div className="rounded position-relative fruite-item">
+                              <div className="fruite-img">
+                                <img src={v.image} className="img-fluid w-100 rounded-top" alt />
+                              </div>
+                              <div className="text-white bg-secondary px-3 py-1 rounded position-absolute" style={{ top: 10, left: 10 }}>Fruits</div>
+                              <div className="p-4 border border-secondary border-top-0 rounded-bottom">
+                                <h4>{v.name}</h4>
+                                <p>{v.description}</p>
+                                <div className="d-flex justify-content-between flex-lg-wrap">
+                                  <p className="text-dark fs-5 fw-bold mb-0">${v.price} / kg</p>
+                                  <a href="#" className="btn border border-secondary rounded-pill px-3 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </Link>
+                          </Link>
                         </div>
 
-                  ))
+                      ))
                     }
-                  <div className="col-12">
-                    <div className="pagination d-flex justify-content-center mt-5">
-                      <a href="#" className="rounded">«</a>
-                      <a href="#" className="active rounded">1</a>
-                      <a href="#" className="rounded">2</a>
-                      <a href="#" className="rounded">3</a>
-                      <a href="#" className="rounded">4</a>
-                      <a href="#" className="rounded">5</a>
-                      <a href="#" className="rounded">6</a>
-                      <a href="#" className="rounded">»</a>
+                    <div className="col-12">
+                      <div className="pagination d-flex justify-content-center mt-5">
+                        <a href="#" className="rounded">«</a>
+                        <a href="#" className="active rounded">1</a>
+                        <a href="#" className="rounded">2</a>
+                        <a href="#" className="rounded">3</a>
+                        <a href="#" className="rounded">4</a>
+                        <a href="#" className="rounded">5</a>
+                        <a href="#" className="rounded">6</a>
+                        <a href="#" className="rounded">»</a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -267,8 +278,7 @@ function Shop(props) {
           </div>
         </div>
       </div>
-    </div>
-      {/* Fruits Shop End*/ }
+      {/* Fruits Shop End*/}
     </div >
 
   );

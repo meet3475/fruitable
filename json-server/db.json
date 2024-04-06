@@ -128,5 +128,47 @@
             "price": 4.99,
             "image": "img/fruite-item-5.jpg"
         }
+    ],
+    "reviews": [
+        {
+            "id": "ab123",
+            "pid": 1,
+            "name": "Ronit",
+            "email": "ronit12@gamil.com",
+            "review": "Good Product",
+            "rating": 3
+        },
+        {
+            "id": "sd123",
+            "pid": 2,
+            "name": "Shyam",
+            "email": "syam12@gamil.com",
+            "review": "Best Product",
+            "rating": 5
+        },
+        {
+            "id": "ac124",
+            "pid": 3,
+            "name": "Vikash",
+            "email": "vikash22@gamil.com",
+            "review": "Good Product",
+            "rating": 4
+        },
+        {
+            "id": "ag235",
+            "pid": 4,
+            "name": "Dhruv",
+            "email": "dhruv289@gamil.com",
+            "review": "Best Product",
+            "rating": 3
+        },
+        {
+            "id": "ab123",
+            "pid": 5,
+            "name": "Umang",
+            "email": "umang987@gamil.com",
+            "review": "Good Product",
+            "rating": 2
+        }
     ]
 }
