@@ -1,174 +1,152 @@
 {
-    "fruites": [
-        {
-            "id": 1,
-            "name": "Grapes",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-5.jpg"
-        },
-        {
-            "id": 2,
-            "name": "Grapes",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-5.jpg"
-        },
-        {
-            "id": 3,
-            "name": "Raspberries",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-2.jpg"
-        },
-        {
-            "id": 4,
-            "name": "Apricots",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-4.jpg"
-        },
-        {
-            "id": 5,
-            "name": "Banana",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-3.jpg"
-        },
-        {
-            "id": 6,
-            "name": "Oranges",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-1.jpg"
-        },
-        {
-            "id": 7,
-            "name": "Raspberries",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-2.jpg"
-        },
-        {
-            "id": 8,
-            "name": "Grapes",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-5.jpg"
-        },
-        {
-            "id": 9,
-            "name": "Oranges",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-5.jpg"
-        }
-    ],
-    "product": [
-        {
-            "id": 1,
-            "name": "Grapes",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-5.jpg"
-        },
-        {
-            "id": 2,
-            "name": "Grapes",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-5.jpg"
-        },
-        {
-            "id": 3,
-            "name": "Raspberries",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-2.jpg"
-        },
-        {
-            "id": 4,
-            "name": "Apricots",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-4.jpg"
-        },
-        {
-            "id": 5,
-            "name": "Banana",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-3.jpg"
-        },
-        {
-            "id": 6,
-            "name": "Oranges",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-1.jpg"
-        },
-        {
-            "id": 7,
-            "name": "Raspberries",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-2.jpg"
-        },
-        {
-            "id": 8,
-            "name": "Grapes",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-5.jpg"
-        },
-        {
-            "id": 9,
-            "name": "Oranges",
-            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-            "price": 4.99,
-            "image": "img/fruite-item-5.jpg"
-        }
-    ],
-    "reviews": [
-        {
-            "id": "ab123",
-            "pid": 1,
-            "name": "Ronit",
-            "email": "ronit12@gamil.com",
-            "review": "Good Product",
-            "rating": 3
-        },
-        {
-            "id": "sd123",
-            "pid": 2,
-            "name": "Shyam",
-            "email": "syam12@gamil.com",
-            "review": "Best Product",
-            "rating": 5
-        },
-        {
-            "id": "ac124",
-            "pid": 3,
-            "name": "Vikash",
-            "email": "vikash22@gamil.com",
-            "review": "Good Product",
-            "rating": 4
-        },
-        {
-            "id": "ag235",
-            "pid": 4,
-            "name": "Dhruv",
-            "email": "dhruv289@gamil.com",
-            "review": "Best Product",
-            "rating": 3
-        },
-        {
-            "id": "ab123",
-            "pid": 5,
-            "name": "Umang",
-            "email": "umang987@gamil.com",
-            "review": "Good Product",
-            "rating": 2
-        }
-    ]
+  "fruites": [
+    {
+      "id": "1",
+      "name": "Grapes",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-5.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Grapes",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-5.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Raspberries",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-2.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Apricots",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-4.jpg"
+    },
+    {
+      "id": "5",
+      "name": "Banana",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-3.jpg"
+    },
+    {
+      "id": "6",
+      "name": "Oranges",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-1.jpg"
+    },
+    {
+      "id": "7",
+      "name": "Raspberries",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-2.jpg"
+    },
+    {
+      "id": "8",
+      "name": "Grapes",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-5.jpg"
+    },
+    {
+      "id": "9",
+      "name": "Oranges",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-5.jpg"
+    }
+  ],
+  "product": [
+    {
+      "id": "5",
+      "name": "orange",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-3.jpg"
+    },
+    {
+      "id": "6",
+      "name": "Oranges",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-1.jpg"
+    },
+    {
+      "id": "7",
+      "name": "Raspberries",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-2.jpg"
+    },
+    {
+      "id": "8",
+      "name": "Grapes",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-5.jpg"
+    },
+    {
+      "id": "9",
+      "name": "Oranges",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-5.jpg"
+    },
+    {
+      "id": "6074",
+      "name": "meet",
+      "description": "axv",
+      "price": "270"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "ab123",
+      "pid": 1,
+      "name": "Ronit",
+      "email": "ronit12@gamil.com",
+      "review": "Good Product",
+      "rating": 3
+    },
+    {
+      "id": "sd123",
+      "pid": 2,
+      "name": "Shyam",
+      "email": "syam12@gamil.com",
+      "review": "Best Product",
+      "rating": 5
+    },
+    {
+      "id": "ac124",
+      "pid": 3,
+      "name": "Vikash",
+      "email": "vikash22@gamil.com",
+      "review": "Good Product",
+      "rating": 4
+    },
+    {
+      "id": "ag235",
+      "pid": 4,
+      "name": "Dhruv",
+      "email": "dhruv289@gamil.com",
+      "review": "Best Product",
+      "rating": 3
+    },
+    {
+      "id": "ab123",
+      "pid": 5,
+      "name": "Umang",
+      "email": "umang987@gamil.com",
+      "review": "Good Product",
+      "rating": 2
+    }
+  ]
 }

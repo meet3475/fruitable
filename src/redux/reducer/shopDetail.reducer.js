@@ -2,7 +2,7 @@ import {GET_SHOPDETAIL } from "../ActionTypes";
 
 const initialState = {
     isLoading: false,
-    fruites: [],
+    reviews: [],
     error: null
 }
 

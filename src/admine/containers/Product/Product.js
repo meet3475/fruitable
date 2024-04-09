@@ -13,12 +13,18 @@ import { object, string, number, date, InferType } from 'yup';
 
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProduct } from '../../../redux/action/product.action';
+import { addProduct, deleteProduct, editProduct, getProduct } from '../../../redux/action/product.action';
 import { Spinner } from 'reactstrap';
+
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 export default function Product() {
     const [open, setOpen] = React.useState(false);
+
+    const [update, setUpdate] = React.useState(false);
 
     const dispatch = useDispatch();
 
@@ -55,10 +61,25 @@ export default function Product() {
         },
         validationSchema: productSchema,
         onSubmit: (values, { resetForm }) => {
+            if (update) {
+                dispatch(editProduct(values))
+            } else {
+                dispatch(addProduct(values))
+            }
             resetForm();
             handleClose();
         },
     });
+
+    const handleDelete = (id) => {
+       dispatch(deleteProduct(id))
+    }
+
+    const handleEdit = (data) => {
+        formik.setValues(data);
+        setOpen(true);
+        setUpdate(true);
+    }
 
 
     const { handleSubmit, handleChange, handleBlur, values, touched, errors } = formik;
@@ -67,6 +88,22 @@ export default function Product() {
         { field: 'name', headerName: 'Name', width: 130 },
         { field: 'description', headerName: 'Description', width: 130 },
         { field: 'price', headerName: 'Price', width: 130 },
+        {
+            field: 'Action',
+            headerName: 'Action',
+            width: 130,
+            renderCell: (params) => (
+                <>
+                    <IconButton aria-label="edit" size="large" onClick={() => handleEdit(params.row)}>
+                        <EditIcon />
+                    </IconButton>
+
+                    <IconButton aria-label="delete" size="large" onClick={() => handleDelete(params.row.id)}>
+                        <DeleteIcon />
+                    </IconButton>
+                </>
+            )
+        }
 
     ];
 
@@ -80,6 +117,7 @@ export default function Product() {
                     <Spinner>
                         Loading...
                     </Spinner> :
+                product.error ?<p>{product.error}</p> :
                     <>
                         <React.Fragment>
                             <Button variant="outlined" onClick={handleClickOpen}>
@@ -140,7 +178,7 @@ export default function Product() {
 
                                         <DialogActions>
                                             <Button onClick={handleClose}>Cancel</Button>
-                                            <Button type="submit">Add</Button>
+                                            <Button type="submit">{update ? 'Update' : 'Add'}</Button>
                                         </DialogActions>
 
                                     </DialogContent>

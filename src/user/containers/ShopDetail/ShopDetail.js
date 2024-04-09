@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getShopDetail } from '../../../redux/action/shopDetail.action';
+import { Axios } from 'axios';
+import axios from "axios"
+import { baseURL } from '../../../utils/baseURL';
 
 function ShopDetail(props) {
 
@@ -10,9 +13,29 @@ function ShopDetail(props) {
 
   const dispatch = useDispatch();
 
+  const [fruits, setFruits] = useState([])
+
   const reviews = useSelector(state => state.reviews)
 
+  const getData = async () => {
+
+    try {
+
+      const response = await fetch("http://localhost:8000/fruites");
+      const data = await response.json()
+
+      // const data =  axios.get(baseURL + "fruites")
+
+      const ans = data.find((v) => v.id === id)
+      console.log(ans);
+      setFruits(ans)
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   React.useEffect(() => {
+    getData()
     dispatch(getShopDetail())
   }, [])
 
@@ -38,14 +61,14 @@ function ShopDetail(props) {
                 <div className="col-lg-6">
                   <div className="border rounded">
                     <a href="#">
-                      <img src="img/single-item.jpg" className="img-fluid rounded" alt="Image" />
+                      <img src={`../${fruits.image}`} className="img-fluid rounded" alt="Image" />
                     </a>
                   </div>
                 </div>
                 <div className="col-lg-6">
-                  <h4 className="fw-bold mb-3">Brocoli</h4>
+                  <h4 className="fw-bold mb-3">{fruits.name}</h4>
                   <p className="mb-3">Category: Vegetables</p>
-                  <h5 className="fw-bold mb-3">3,35 $</h5>
+                  <h5 className="fw-bold mb-3">${fruits.price}</h5>
                   <div className="d-flex mb-4">
                     <i className="fa fa-star text-secondary" />
                     <i className="fa fa-star text-secondary" />
@@ -211,10 +234,10 @@ function ShopDetail(props) {
                     </div>
                   </div>
                 </form>
-                <div>
-                  { 
+                <div className='row'>
+                  {
                     reviews.reviews.map((v, i) => (
-                      <div>
+                      <div className='col-4'>
                         <h1>{v.pid}</h1>
                         <h2>{v.name}</h2>
                         <h4>{v.id}</h4>
@@ -274,7 +297,7 @@ function ShopDetail(props) {
                   <h4 className="mb-4">Featured products</h4>
                   <div className="d-flex align-items-center justify-content-start">
                     <div className="rounded" style={{ width: 100, height: 100 }}>
-                      <img src="img/featur-1.jpg" className="img-fluid rounded" alt="Image" />
+                      <img src="../img/featur-1.jpg" className="img-fluid rounded" alt="Image" />
                     </div>
                     <div>
                       <h6 className="mb-2">Big Banana</h6>
@@ -293,7 +316,7 @@ function ShopDetail(props) {
                   </div>
                   <div className="d-flex align-items-center justify-content-start">
                     <div className="rounded" style={{ width: 100, height: 100 }}>
-                      <img src="img/featur-2.jpg" className="img-fluid rounded" alt />
+                      <img src="../img/featur-2.jpg" className="img-fluid rounded" alt />
                     </div>
                     <div>
                       <h6 className="mb-2">Big Banana</h6>
@@ -312,7 +335,7 @@ function ShopDetail(props) {
                   </div>
                   <div className="d-flex align-items-center justify-content-start">
                     <div className="rounded" style={{ width: 100, height: 100 }}>
-                      <img src="img/featur-3.jpg" className="img-fluid rounded" alt />
+                      <img src="../img/featur-3.jpg" className="img-fluid rounded" alt />
                     </div>
                     <div>
                       <h6 className="mb-2">Big Banana</h6>
@@ -331,7 +354,7 @@ function ShopDetail(props) {
                   </div>
                   <div className="d-flex align-items-center justify-content-start">
                     <div className="rounded me-4" style={{ width: 100, height: 100 }}>
-                      <img src="img/vegetable-item-4.jpg" className="img-fluid rounded" alt />
+                      <img src="../img/vegetable-item-4.jpg" className="img-fluid rounded" alt />
                     </div>
                     <div>
                       <h6 className="mb-2">Big Banana</h6>
@@ -350,7 +373,7 @@ function ShopDetail(props) {
                   </div>
                   <div className="d-flex align-items-center justify-content-start">
                     <div className="rounded me-4" style={{ width: 100, height: 100 }}>
-                      <img src="img/vegetable-item-5.jpg" className="img-fluid rounded" alt />
+                      <img src="../img/vegetable-item-5.jpg" className="img-fluid rounded" alt />
                     </div>
                     <div>
                       <h6 className="mb-2">Big Banana</h6>
@@ -369,7 +392,7 @@ function ShopDetail(props) {
                   </div>
                   <div className="d-flex align-items-center justify-content-start">
                     <div className="rounded me-4" style={{ width: 100, height: 100 }}>
-                      <img src="img/vegetable-item-6.jpg" className="img-fluid rounded" alt />
+                      <img src="../img/vegetable-item-6.jpg" className="img-fluid rounded" alt />
                     </div>
                     <div>
                       <h6 className="mb-2">Big Banana</h6>
@@ -392,7 +415,7 @@ function ShopDetail(props) {
                 </div>
                 <div className="col-lg-12">
                   <div className="position-relative">
-                    <img src="img/banner-fruits.jpg" className="img-fluid w-100 rounded" alt />
+                    <img src="../img/banner-fruits.jpg" className="img-fluid w-100 rounded" alt />
                     <div className="position-absolute" style={{ top: '50%', right: 10, transform: 'translateY(-50%)' }}>
                       <h3 className="text-secondary fw-bold">Fresh <br /> Fruits <br /> Banner</h3>
                     </div>
