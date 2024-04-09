@@ -37,7 +37,9 @@ export const addProduct = (data) => async (dispatch) => {
                 console.log(response.data);
                 dispatch({ type: ADD_PRODUCT, payload: response.data })
             })
-            .catch((error) => dispatch(handleError(error.message)))
+            .catch((error) => {
+                dispatch(handleError(error.message))
+            })
     } catch (error) {
         dispatch(handleError(error.message))
     }
@@ -48,7 +50,9 @@ export const deleteProduct = (id) => async (dispatch) => {
     try {
         await axios.delete(baseURL + "product/" + id)
             .then(dispatch({ type: DELETE_PRODUCT, payload: id }))
-            .catch((error) => dispatch(handleError(error.message)))
+            .catch((error) => {
+                dispatch(handleError(error.message))
+            })
     } catch (error) {
         dispatch(handleError(error.message))
     }
@@ -61,7 +65,9 @@ export const editProduct = (data) => async (dispatch) => {
             .then((response) => { 
                 dispatch({ type: UPDATE_PRODUCT, payload: data })
             })
-            .catch(dispatch(handleError(error.message)))
+            .catch((error) => {
+                dispatch(handleError(error.message))
+            })
     } catch (error) {
         dispatch(handleError(error.message))
     }
