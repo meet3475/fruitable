@@ -109,44 +109,48 @@
   ],
   "reviews": [
     {
-      "id": "ab123",
-      "pid": 1,
-      "name": "Ronit",
-      "email": "ronit12@gamil.com",
-      "review": "Good Product",
-      "rating": 3
-    },
-    {
       "id": "sd123",
       "pid": 2,
       "name": "Shyam",
       "email": "syam12@gamil.com",
-      "review": "Best Product",
+      "review": "Good Product",
       "rating": 5
     },
     {
-      "id": "ac124",
-      "pid": 3,
-      "name": "Vikash",
-      "email": "vikash22@gamil.com",
-      "review": "Good Product",
-      "rating": 4
+      "id": "7e2a",
+      "name": "Dobariya ",
+      "email": "meetdobariya480@gmail.com",
+      "review": "Good product"
     },
     {
-      "id": "ag235",
-      "pid": 4,
-      "name": "Dhruv",
-      "email": "dhruv289@gamil.com",
-      "review": "Best Product",
-      "rating": 3
+      "id": "381f",
+      "name": "Vraj Dhaduk",
+      "email": "vraj21@gamail.com",
+      "review": "Best Product"
     },
     {
-      "id": "ab123",
-      "pid": 5,
-      "name": "Umang",
-      "email": "umang987@gamil.com",
-      "review": "Good Product",
-      "rating": 2
+      "id": "916a",
+      "name": "amit",
+      "email": "xyz444@gamil.com",
+      "review": "dhfkgj"
+    },
+    {
+      "id": "4c2c",
+      "name": "Dobariya Meet  b",
+      "email": "meetdobariya480@gmail.com",
+      "review": "asvb"
+    },
+    {
+      "id": "394f",
+      "name": "Dobariya Meet",
+      "email": "meet1232@gmail.com",
+      "review": "sfdsgnbhv"
+    },
+    {
+      "id": "81bb",
+      "name": "Dobariya",
+      "email": "vraj21@gamail.com",
+      "review": "fdxgfhj"
     }
   ]
 }

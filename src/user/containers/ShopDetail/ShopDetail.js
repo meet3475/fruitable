@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getShopDetail } from '../../../redux/action/shopDetail.action';
+import { addShopDetail, deleteShopDetail, editShopDetail, getShopDetail } from '../../../redux/action/shopDetail.action';
 import { Axios } from 'axios';
 import axios from "axios"
 import { baseURL } from '../../../utils/baseURL';
+
+import { object, string, number, date, InferType } from 'yup';
+
+import { useFormik } from 'formik';
+
+import { DataGrid } from '@mui/x-data-grid';
+
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 function ShopDetail(props) {
 
@@ -15,23 +25,72 @@ function ShopDetail(props) {
 
   const [fruits, setFruits] = useState([])
 
+  const [update, setUpdate] = useState(false)
+
+
   const reviews = useSelector(state => state.reviews)
+
+  const fruites = useSelector(state => state.fruites)
+
+
+  let shopDetailSchema = object({
+    name: string().required(),
+    email: string().required(),
+    review: string().required(),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      review: '',
+    },
+
+    validationSchema: shopDetailSchema,
+
+    onSubmit: (values, { resetForm }) => {
+      if (update) {
+        dispatch(editShopDetail(values))
+      } else {
+        dispatch(addShopDetail(values))
+      }
+
+      resetForm();
+
+    },
+  });
+
+  const { handleSubmit, handleChange, handleBlur, errors, touched, values, setValues } = formik;
+
 
   const getData = async () => {
 
     try {
 
-      const response = await fetch("http://localhost:8000/fruites");
-      const data = await response.json()
+      // const response = await fetch("http://localhost:8000/fruites");
+      // const data = await response.json()
 
-      // const data =  axios.get(baseURL + "fruites")
+      // // const data =  axios.get(baseURL + "fruites")
 
-      const ans = data.find((v) => v.id === id)
-      console.log(ans);
-      setFruits(ans)
+      // const ans = data.find((v) => v.id === id)
+      // console.log(ans);
+      // setFruits(ans)
+
+      const data = fruites.fruites.find((v) => v.id === id)
+      setFruits(data);
+
     } catch (error) {
       console.log(error.message);
     }
+  }
+
+  const handleDelete = (id) => {
+    dispatch(deleteShopDetail(id))
+  }
+
+  const handleEdit = (data) => {
+    formik.setValues(data);
+    setUpdate(true);
   }
 
   React.useEffect(() => {
@@ -39,18 +98,40 @@ function ShopDetail(props) {
     dispatch(getShopDetail())
   }, [])
 
+  const columns = [
+    { field: 'name', headerName: 'Name', width: 170 },
+    { field: 'email', headerName: 'Email', width: 170 },
+    { field: 'review', headerName: 'Review', width: 170 },
+    {
+      field: 'Action',
+      headerName: 'Action',
+      width: 130,
+      renderCell: (params) => (
+        <>
+          <IconButton aria-label="edit" size="large" onClick={() => handleEdit(params.row)}>
+            <EditIcon />
+          </IconButton>
+
+          <IconButton aria-label="delete" size="large" onClick={() => handleDelete(params.row.id)}>
+            <DeleteIcon />
+          </IconButton>
+        </>
+      )
+    }
+
+  ];
 
   return (
     <div>
       {/* Single Page Header start */}
-      <div className="container-fluid page-header py-5">
+      < div className="container-fluid page-header py-5" >
         <h1 className="text-center text-white display-6">Shop Detail</h1>
         <ol className="breadcrumb justify-content-center mb-0">
           <li className="breadcrumb-item"><a href="#">Home</a></li>
           <li className="breadcrumb-item"><a href="#">Pages</a></li>
           <li className="breadcrumb-item active text-white">Shop Detail</li>
         </ol>
-      </div>
+      </div >
       {/* Single Page Header End */}
       {/* Single Product Start */}
       <div className="container-fluid py-5 mt-5">
@@ -61,14 +142,14 @@ function ShopDetail(props) {
                 <div className="col-lg-6">
                   <div className="border rounded">
                     <a href="#">
-                      <img src={`../${fruits.image}`} className="img-fluid rounded" alt="Image" />
+                      <img src={`../${fruits?.image}`} className="img-fluid rounded" alt="Image" />
                     </a>
                   </div>
                 </div>
                 <div className="col-lg-6">
-                  <h4 className="fw-bold mb-3">{fruits.name}</h4>
+                  <h4 className="fw-bold mb-3">{fruits?.name}</h4>
                   <p className="mb-3">Category: Vegetables</p>
-                  <h5 className="fw-bold mb-3">${fruits.price}</h5>
+                  <h5 className="fw-bold mb-3">${fruits?.price}</h5>
                   <div className="d-flex mb-4">
                     <i className="fa fa-star text-secondary" />
                     <i className="fa fa-star text-secondary" />
@@ -199,22 +280,43 @@ function ShopDetail(props) {
                     </div>
                   </div>
                 </div>
-                <form action="#">
+
+
+                <form onSubmit={handleSubmit}>
+
                   <h4 className="mb-5 fw-bold">Leave a Reply</h4>
                   <div className="row g-4">
                     <div className="col-lg-6">
                       <div className="border-bottom rounded">
-                        <input type="text" className="form-control border-0 me-4" placeholder="Yur Name *" />
+                        <input type="text" className="form-control border-0 me-4" placeholder="Your Name *"
+                          name="name"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.name}
+                        />
+                        {errors.name && touched.name ? <span style={{ color: "red" }}>{errors.name}</span> : null}
                       </div>
                     </div>
                     <div className="col-lg-6">
                       <div className="border-bottom rounded">
-                        <input type="email" className="form-control border-0" placeholder="Your Email *" />
+                        <input type="email" className="form-control border-0" placeholder="Your Email *"
+                          name="email"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.email}
+                        />
+                        {errors.email && touched.email ? <span style={{ color: "red" }}>{errors.email}</span> : null}
                       </div>
                     </div>
                     <div className="col-lg-12">
                       <div className="border-bottom rounded my-4">
-                        <textarea name id className="form-control border-0" cols={30} rows={8} placeholder="Your Review *" spellCheck="false" defaultValue={""} />
+                        <textarea id className="form-control border-0" cols={30} rows={8} placeholder="Your Review *" spellCheck="false" defaultValue={""}
+                          name="review"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.review}
+                        />
+                        {errors.review && touched.review ? <span style={{ color: "red" }}>{errors.review}</span> : null}
                       </div>
                     </div>
                     <div className="col-lg-12">
@@ -229,24 +331,26 @@ function ShopDetail(props) {
                             <i className="fa fa-star" />
                           </div>
                         </div>
-                        <a href="#" className="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post Comment</a>
+                        <button type="submit" className="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post Comment</button>
                       </div>
                     </div>
                   </div>
                 </form>
                 <div className='row'>
-                  {
-                    reviews.reviews.map((v, i) => (
-                      <div className='col-4'>
-                        <h1>{v.pid}</h1>
-                        <h2>{v.name}</h2>
-                        <h4>{v.id}</h4>
-                        <h5>{v.email}</h5>
-                        <h6>{v.review}</h6>
-                        <p>{v.rating}</p>
-                      </div>
-                    ))
-                  }
+                  <div style={{ height: 400, width: '100%' }}>
+                    <DataGrid
+                      rows={reviews.reviews}
+                      columns={columns}
+                      initialState={{
+                        pagination: {
+                          paginationModel: { page: 0, pageSize: 5 },
+                        },
+                      }}
+                      pageSizeOptions={[5, 10]}
+                      checkboxSelection
+                    />
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -544,7 +648,7 @@ function ShopDetail(props) {
         </div>
       </div>
       {/* Single Product End */}
-    </div>
+    </div >
   );
 }
 

@@ -1,4 +1,5 @@
-import { ADD_SHOPDETAIL, DELETE_SHOPDETAIL, GET_SHOPDETAIL, UPDATE_SHOPDETAIL } from "../ActionTypes";
+import { ADD_REVIEW, DELETE_REVIEW, GET_REVIEW, UPDATE_REVIEW } from "../ActionTypes";
+
 
 const initialState = {
     isLoading: false,
@@ -6,32 +7,33 @@ const initialState = {
     error: null
 }
 
-export const reviewReducer = (state = initialState, action) => {
+export const  reviewReducer = (state = initialState, action) => {
     console.log(action);
 
     switch (action.type) {
-        case GET_SHOPDETAIL:
+        case GET_REVIEW:
+            // console.log("okkkkkkk", action.payload);
             return {
                 isLoading: false,
                 reviews: action.payload,
                 error: null
             }
 
-        case ADD_SHOPDETAIL:
+        case ADD_REVIEW:
             return {
                 isLoading: false,
                 reviews: state.reviews.concat(action.payload),
                 error: null
             }
 
-        case DELETE_SHOPDETAIL:
+        case DELETE_REVIEW:
             return {
                 isLoading: false,
                 reviews: state.reviews.filter((v) => v.id !== action.payload),
                 error: null
             }
 
-        case UPDATE_SHOPDETAIL:
+        case UPDATE_REVIEW:
             return {
                 isLoading: false,
                 reviews: state.reviews.map((v) => {

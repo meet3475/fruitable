@@ -11,6 +11,7 @@ import Contact from '../../user/containers/Contact/Contact';
 import Footer from '../../user/components/Footer/Footer';
 import ShopDetail from '../../user/containers/ShopDetail/ShopDetail';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import Review from '../../user/containers/Review/Review';
 
 
 function UserRoute(props) {
@@ -34,6 +35,7 @@ function UserRoute(props) {
                     <Route exact path="/Testimonial" element={<Testimonial />} />
                     <Route exact path="/Page" element={<Page />} />
                     <Route exact path="/Contact" element={<Contact />} />
+                    <Route exact path="/Review" element={<Review />} />
                 </Routes>
                 <Footer />
             </>

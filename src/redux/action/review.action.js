@@ -1,12 +1,13 @@
-import {ADD_SHOPDETAIL, DELETE_SHOPDETAIL, GET_SHOPDETAIL, UPDATE_SHOPDETAIL } from "../ActionTypes"
+
 import axios from "axios"
 import { baseURL } from "../../utils/baseURL"
+import { ADD_REVIEW, DELETE_REVIEW, GET_REVIEW, UPDATE_REVIEW } from "../ActionTypes"
 
-export const getShopDetail = () => async (dispatch) => {
+export const getReview = () => async (dispatch) => {
     try {
         await axios.get(baseURL + "reviews")
             .then((response) => {
-                dispatch({ type: GET_SHOPDETAIL, payload: response.data })
+                dispatch({ type: GET_REVIEW, payload: response.data })
             })
             .catch((error) => {
                 console.log(error);
@@ -16,11 +17,11 @@ export const getShopDetail = () => async (dispatch) => {
     }
 }
 
-export const  addShopDetail = (data) => async (dispatch) => {
+export const  addReview = (data) => async (dispatch) => {
     try {
         await axios.post(baseURL + "reviews", data)
             .then((response) => {
-                dispatch({ type: ADD_SHOPDETAIL, payload: response.data })
+                dispatch({ type: ADD_REVIEW, payload: response.data })
             })
             .catch((error) => {
                 console.log(error);
@@ -30,11 +31,11 @@ export const  addShopDetail = (data) => async (dispatch) => {
     }
 }
 
-export const  deleteShopDetail = (id) => async (dispatch) => {
+export const  deleteReview = (id) => async (dispatch) => {
     try {
         await axios.delete(baseURL + "reviews/" + id)
             .then((response) => {
-                dispatch({ type: DELETE_SHOPDETAIL, payload: id })
+                dispatch({ type: DELETE_REVIEW, payload: id })
             })
             .catch((error) => {
                 console.log(error);
@@ -44,11 +45,11 @@ export const  deleteShopDetail = (id) => async (dispatch) => {
     }
 }
 
-export const  editShopDetail = (data) => async (dispatch) => {
+export const  editReview = (data) => async (dispatch) => {
     try {
         await axios.put(baseURL + "reviews/" + data.id, data)
             .then((response) => {
-                dispatch({ type: UPDATE_SHOPDETAIL, payload: data })
+                dispatch({ type: UPDATE_REVIEW, payload: data })
             })
             .catch((error) => {
                 console.log(error);
