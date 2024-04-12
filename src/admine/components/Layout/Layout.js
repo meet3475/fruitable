@@ -97,7 +97,8 @@ let adminlink = [
   { title: "Facilities", icon: <DnsIcon />, to: "/admine/facilities" },
   { title: "Counter", icon: <CalculateIcon />, to: "/admine/counter" },
   { title: "Product", icon: < AppleIcon />, to: "/admine/product" },
-  { title: "Review", icon: < RateReviewIcon />, to: "/admine/review" }
+  { title: "Review", icon: < RateReviewIcon />, to: "/admine/review" },
+  { title: "Tool Counter", icon: <CalculateIcon />, to: "/admine/toolcounter" }
   
 ]
 

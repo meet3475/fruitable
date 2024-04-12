@@ -4,6 +4,7 @@ import { counterReducer } from "./counter.reduce";
 import { productReducer } from "./product.reducer";
 import { fruitesReducer } from "./shop.reducer";
 import { reviewReducer } from "./review.reducer";
+import { counterSlice } from "./toolCounterSlice";
 
 
 export const RootReducer = combineReducers({
@@ -12,5 +13,5 @@ export const RootReducer = combineReducers({
     product : productReducer,
     fruites : fruitesReducer,
     reviews :  reviewReducer,
-   
+    counter : counterSlice
 })
