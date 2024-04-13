@@ -174,6 +174,7 @@ function ShopDetail(props) {
                   </div>
                   <a href="#" className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
                 </div>
+                
                 <div className="col-lg-12">
                   <nav>
                     <div className="nav nav-tabs mb-3">

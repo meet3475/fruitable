@@ -30,3 +30,5 @@ export const DELETE_REVIEW = "DELETE_REVIEW"
 export const UPDATE_REVIEW = "UPDATE_REVIEW"
 export const LOADING_REVIEW = "LOADINGE_REVIEW"
 export const ERROR_REVIEW = "ERROR_REVIEW"
+
+export const GET_CART = "GET_CART"
