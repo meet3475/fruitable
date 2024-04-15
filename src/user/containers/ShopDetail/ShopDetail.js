@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addShopDetail, deleteShopDetail, editShopDetail, getShopDetail } from '../../../redux/action/shopDetail.action';
 import { Axios } from 'axios';
@@ -172,8 +172,11 @@ function ShopDetail(props) {
                       </button>
                     </div>
                   </div>
-                  <a href="#" className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
+                  <Link to={`/Cart/${id}`}>
+                  <button type='submit' className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</button>
+                 </Link>
                 </div>
+
                 
                 <div className="col-lg-12">
                   <nav>
