@@ -8,7 +8,7 @@ export const storeReduce = () => {
     const persistConfig = {
         key: 'root',
         storage,
-        whitelist: ['facilities']
+        whitelist: ['facilities',]
     }
 
     const persistedReducer = persistReducer(persistConfig, RootReducer)

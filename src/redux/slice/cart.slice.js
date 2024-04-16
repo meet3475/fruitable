@@ -6,16 +6,26 @@ const initialState = {
     error: null
 }
 
-export const  cartSlice = createSlice ({
+const  cartSlice = createSlice ({
     name: 'cart',
     initialState,
     reducers: {
-        addtoCart : (state, action) => {
-            state.cart.push(action.payload)
+        addToCart : (state, action) => {
+            const index =  state.cart.findIndex((v) => v.Pid === action.payload);
+            console.log(index);
+
+            if (index !== -1) {
+               state.cart[index].qty++;
+            } else {
+                state.cart.push({Pid:action.payload, qty: 1});
+            }
+
+           console.log(action);
+          
         }
     }
 })
 
-export const {addtoCart} =  cartSlice.actions;
+export const {addToCart} =  cartSlice.actions;
 
 export default cartSlice.reducer

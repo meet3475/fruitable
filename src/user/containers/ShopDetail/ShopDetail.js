@@ -16,6 +16,8 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
+import { addToCart } from '../../../redux/slice/cart.slice';
+
 function ShopDetail(props) {
 
   const { id } = useParams()
@@ -27,11 +29,17 @@ function ShopDetail(props) {
 
   const [update, setUpdate] = useState(false)
 
-
   const reviews = useSelector(state => state.reviews)
 
   const fruites = useSelector(state => state.fruites)
+  
 
+  const cartData = useSelector(state => state.cart)
+  console.log(cartData);
+
+  const handleAddToCart = () => {
+      dispatch(addToCart(id))
+  }
 
   let shopDetailSchema = object({
     name: string().required(),
@@ -142,14 +150,14 @@ function ShopDetail(props) {
                 <div className="col-lg-6">
                   <div className="border rounded">
                     <a href="#">
-                      <img src={`../${fruits?.image}`} className="img-fluid rounded" alt="Image" />
+                      <img src={`../${fruits.image}`} className="img-fluid rounded" alt="Image" />
                     </a>
                   </div>
                 </div>
                 <div className="col-lg-6">
-                  <h4 className="fw-bold mb-3">{fruits?.name}</h4>
+                  <h4 className="fw-bold mb-3">{fruits.name}</h4>
                   <p className="mb-3">Category: Vegetables</p>
-                  <h5 className="fw-bold mb-3">${fruits?.price}</h5>
+                  <h5 className="fw-bold mb-3">${fruits.price}</h5>
                   <div className="d-flex mb-4">
                     <i className="fa fa-star text-secondary" />
                     <i className="fa fa-star text-secondary" />
@@ -172,9 +180,9 @@ function ShopDetail(props) {
                       </button>
                     </div>
                   </div>
-                  <Link to={`/Cart/${id}`}>
-                  <button type='submit' className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</button>
-                 </Link>
+                  
+                  <a onClick={handleAddToCart} href='#' className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
+             
                 </div>
 
                 
