@@ -22,10 +22,37 @@ const  cartSlice = createSlice ({
 
            console.log(action);
           
+        },
+        plusToCart : (state, action) => {
+            const index =  state.cart.findIndex((v) => v.Pid === action.payload);
+            console.log(index);
+
+            if (index !== -1) {
+               state.cart[index].qty++;
+            } else {
+                state.cart.push({Pid:action.payload, qty: 1});
+            }
+
+           console.log(action);
+          
+        },
+        minusToCart : (state, action) => {
+            const index =  state.cart.findIndex((v) => v.Pid === action.payload);
+            console.log(index);
+
+            if (index !== -1) {
+               state.cart[index].qty++;
+            } else {
+                state.cart.push({Pid:action.payload, qty: 1});
+            }
+
+           console.log(action);
+          
         }
+
     }
 })
 
-export const {addToCart} =  cartSlice.actions;
+export const {addToCart, plusToCart, minusToCart} =  cartSlice.actions;
 
 export default cartSlice.reducer
