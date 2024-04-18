@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProduct } from '../../../redux/action/product.action';
+import { minusToCart, plusToCart } from '../../../redux/slice/cart.slice';
 
 
 function Cart(props) {
@@ -28,8 +29,13 @@ function Cart(props) {
 
     console.log(cartData);
 
-    // const TotalAmt = v.price * v.qty
+    const handlePlus = (id) => {
+        dispatch(plusToCart(id))
+    }
 
+    const handleminus = () => {
+        dispatch(minusToCart())
+    }
 
 
 
@@ -100,9 +106,9 @@ function Cart(props) {
                                                             <i className="fa fa-minus" />
                                                         </button>
                                                     </div>
-                                                    <input type="text" className="form-control form-control-sm text-center border-0" defaultValue={v.qty} />
+                                                    <span className="form-control form-control-sm text-center border-0">{v.qty}</span>
                                                     <div className="input-group-btn">
-                                                        <button onClick={handlePlus} className="btn btn-sm btn-plus rounded-circle bg-light border">
+                                                        <button onClick={() => handlePlus(v.id)} className="btn btn-sm btn-plus rounded-circle bg-light border">
                                                             <i className="fa fa-plus" />
                                                         </button>
                                                     </div>
