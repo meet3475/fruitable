@@ -16,7 +16,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-import { addToCart } from '../../../redux/slice/cart.slice';
+import { addToCart, minusToCart, plusToCart } from '../../../redux/slice/cart.slice';
 
 function ShopDetail(props) {
 
@@ -32,6 +32,8 @@ function ShopDetail(props) {
   const reviews = useSelector(state => state.reviews)
 
   const fruites = useSelector(state => state.fruites)
+
+  // const cart = useSelector(state => state.cart)
   
 
   const cartData = useSelector(state => state.cart)
@@ -129,6 +131,14 @@ function ShopDetail(props) {
 
   ];
 
+  const handlePlus = (id) => {
+    dispatch(plusToCart(id))
+}
+
+const handleminus = (id) => {
+    dispatch(minusToCart(id))
+}
+
   return (
     <div>
       {/* Single Page Header start */}
@@ -169,13 +179,13 @@ function ShopDetail(props) {
                   <p className="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p>
                   <div className="input-group quantity mb-5" style={{ width: 100 }}>
                     <div className="input-group-btn">
-                      <button className="btn btn-sm btn-minus rounded-circle bg-light border">
+                      <button onClick={() => handleminus(fruits.id)}  className="btn btn-sm btn-minus rounded-circle bg-light border">
                         <i className="fa fa-minus" />
                       </button>
                     </div>
-                    <input type="text" className="form-control form-control-sm text-center border-0" defaultValue={1} />
+                    <span className="form-control form-control-sm text-center border-0" >{1}</span>
                     <div className="input-group-btn">
-                      <button className="btn btn-sm btn-plus rounded-circle bg-light border">
+                      <button  onClick={() => handlePlus(fruits.id)} className="btn btn-sm btn-plus rounded-circle bg-light border">
                         <i className="fa fa-plus" />
                       </button>
                     </div>
