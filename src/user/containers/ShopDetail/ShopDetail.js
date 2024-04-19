@@ -18,6 +18,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { addToCart, minusToCart, plusToCart } from '../../../redux/slice/cart.slice';
 
+
 function ShopDetail(props) {
 
   const { id } = useParams()
@@ -29,25 +30,27 @@ function ShopDetail(props) {
 
   const [update, setUpdate] = useState(false)
 
+  const [count, setCount] = useState(1)
+
   const reviews = useSelector(state => state.reviews)
 
   const fruites = useSelector(state => state.fruites)
 
-  // const cart = useSelector(state => state.cart)
-  // console.log(cart);
+  const cart = useSelector(state => state.cart)
+  console.log(cart);
 
   const handleAddToCart = () => {
-    dispatch(addToCart(id))
+    dispatch(addToCart({id, count}))
   }
 
-  const handlePlus = (id) => {
-    console.log(id);
-    dispatch(plusToCart(id))
+  const handlePlus = () => {
+    setCount(prev  => prev + 1)
   }
 
-  const handleminus = (id) => {
-    console.log(id);
-    dispatch(minusToCart(id))
+  const handleminus = () => {
+    if (count > 1) {
+      setCount(prev  => prev - 1)
+    }
   }
 
   let shopDetailSchema = object({
@@ -180,13 +183,13 @@ function ShopDetail(props) {
                   <p className="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p>
                   <div className="input-group quantity mb-5" style={{ width: 100 }}>
                     <div className="input-group-btn">
-                      <button onClick={() => handleminus(fruits.id)} className="btn btn-sm btn-minus rounded-circle bg-light border">
+                      <button onClick={() => handleminus()} className="btn btn-sm btn-minus rounded-circle bg-light border">
                         <i className="fa fa-minus" />
                       </button>
                     </div>
-                    <span className="form-control form-control-sm text-center border-0" >{1}</span>
+                    <span className="form-control form-control-sm text-center border-0" >{count}</span>
                     <div className="input-group-btn">
-                      <button onClick={() => handlePlus(fruits.id)} className="btn btn-sm btn-plus rounded-circle bg-light border">
+                      <button onClick={() => handlePlus()} className="btn btn-sm btn-plus rounded-circle bg-light border">
                         <i className="fa fa-plus" />
                       </button>
                     </div>

@@ -24,6 +24,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import { NavLink } from 'react-router-dom';
 import DnsIcon from '@mui/icons-material/Dns';
 import CalculateIcon from '@mui/icons-material/Calculate';
+import DiscountIcon from '@mui/icons-material/Discount';
 
 const drawerWidth = 240;
 
@@ -96,8 +97,9 @@ let adminlink = [
   { title: "Catagory", icon: < CategoryIcon />, to: "/admine/catagory" },
   { title: "Facilities", icon: <DnsIcon />, to: "/admine/facilities" },
   { title: "Counter", icon: <CalculateIcon />, to: "/admine/counter" },
-  { title: "Product", icon: < AppleIcon />, to: "/admine/product" },
-  { title: "Review", icon: < RateReviewIcon />, to: "/admine/review" },
+  { title: "Product", icon: <AppleIcon />, to: "/admine/product" },
+  { title: "Review", icon: <RateReviewIcon />, to: "/admine/review" },
+  { title: "Coupon", icon: <DiscountIcon  />, to: "/admine/coupon" },
   
 ]
 

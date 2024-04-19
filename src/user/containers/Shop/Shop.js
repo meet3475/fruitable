@@ -28,7 +28,7 @@ function Shop(props) {
   const fruites = useSelector(state => state.fruites)
 
   const handleAddToCart = (id) => {
-    dispatch(addToCart(id))
+    dispatch(addToCart({id, count:1}))
   }
 
   React.useEffect(() => {
@@ -255,7 +255,6 @@ function Shop(props) {
                                   <p className="text-dark fs-5 fw-bold mb-0">${v.price} / kg</p>
                                   <Link
                                     onClick={() => handleAddToCart(v.id)} 
-                                    href="#"
                                     className="btn border border-secondary rounded-pill px-3 text-primary"
                                   >
                                     <i className="fa fa-shopping-bag me-2 text-primary" />

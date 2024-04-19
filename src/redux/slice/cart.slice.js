@@ -11,13 +11,13 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addToCart: (state, action) => {
-            const index = state.cart.findIndex((v) => v.Pid === action.payload);
+            const index = state.cart.findIndex((v) => v.Pid === action.payload.id);
             console.log(index);
 
             if (index !== -1) {
-                state.cart[index].qty++;
+                state.cart[index].qty += action.payload.count
             } else {
-                state.cart.push({ Pid: action.payload, qty: 1 });
+                state.cart.push({ Pid: action.payload.id, qty: action.payload.count});
             }
 
             console.log(action);
