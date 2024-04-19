@@ -34,13 +34,20 @@ function ShopDetail(props) {
   const fruites = useSelector(state => state.fruites)
 
   // const cart = useSelector(state => state.cart)
-  
-
-  const cartData = useSelector(state => state.cart)
-  console.log(cartData);
+  // console.log(cart);
 
   const handleAddToCart = () => {
-      dispatch(addToCart(id))
+    dispatch(addToCart(id))
+  }
+
+  const handlePlus = (id) => {
+    console.log(id);
+    dispatch(plusToCart(id))
+  }
+
+  const handleminus = (id) => {
+    console.log(id);
+    dispatch(minusToCart(id))
   }
 
   let shopDetailSchema = object({
@@ -131,13 +138,7 @@ function ShopDetail(props) {
 
   ];
 
-  const handlePlus = (id) => {
-    dispatch(plusToCart(id))
-}
 
-const handleminus = (id) => {
-    dispatch(minusToCart(id))
-}
 
   return (
     <div>
@@ -179,23 +180,23 @@ const handleminus = (id) => {
                   <p className="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p>
                   <div className="input-group quantity mb-5" style={{ width: 100 }}>
                     <div className="input-group-btn">
-                      <button onClick={() => handleminus(fruits.id)}  className="btn btn-sm btn-minus rounded-circle bg-light border">
+                      <button onClick={() => handleminus(fruits.id)} className="btn btn-sm btn-minus rounded-circle bg-light border">
                         <i className="fa fa-minus" />
                       </button>
                     </div>
                     <span className="form-control form-control-sm text-center border-0" >{1}</span>
                     <div className="input-group-btn">
-                      <button  onClick={() => handlePlus(fruits.id)} className="btn btn-sm btn-plus rounded-circle bg-light border">
+                      <button onClick={() => handlePlus(fruits.id)} className="btn btn-sm btn-plus rounded-circle bg-light border">
                         <i className="fa fa-plus" />
                       </button>
                     </div>
                   </div>
-                  
+
                   <a onClick={handleAddToCart} href='#' className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
-             
+
                 </div>
 
-                
+
                 <div className="col-lg-12">
                   <nav>
                     <div className="nav nav-tabs mb-3">
