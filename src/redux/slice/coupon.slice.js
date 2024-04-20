@@ -95,24 +95,22 @@ export const addCoupon = (data) => async (dispatch) => {
 }
 
 export const removeCoupon = (id) => async (dispatch) => {
-    console.log(id);
     dispatch(removeStartCoupon());
     try {
-        const response = await axios.delete(baseURL + "coupon/" + id);
-        dispatch(removetoCoupon(response.id))
+        await axios.delete(baseURL + "coupon/" + id);
+        dispatch(removetoCoupon(id));
     } catch (error) {
-        dispatch(removeInvCoupon(error.message))
+        dispatch(removeInvCoupon(error.message));
     }
 }
 
 export const updateCoupon = (data) => async (dispatch) => {
-    console.log(data);
     dispatch(updateStartCoupon());
     try {
         const response = await axios.put(baseURL + "coupon/" + data.id, data);
         dispatch(updatetoCoupon(response.data));
     } catch (error) {
-        dispatch(updateInvCoupon(error.message))
+        dispatch(updateInvCoupon(error.message));
     }
 }
  

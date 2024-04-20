@@ -68,7 +68,7 @@ function Coupon(props) {
 
         onSubmit: (values, { resetForm }) => {
             if (update) {
-                dispatch(updateCoupon(values.id, values))
+                dispatch(updateCoupon(values))
             } else {
                 const rNo = Math.floor(Math.random() * 1000);
                 dispatch(addCoupon({ ...values, id: rNo }))
