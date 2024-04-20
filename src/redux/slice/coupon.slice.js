@@ -17,8 +17,8 @@ const couponSlice = createSlice({
             state.error = null;
         },
         gettoCoupon: (state, action) => {
-            state.isLoading = false;
             state.coupon = action.payload;
+            state.isLoading = false;
         },
         getInvCoupon: (state, action) => {
             state.isLoading = false;
@@ -29,8 +29,8 @@ const couponSlice = createSlice({
             state.error = null;
         },
         addtoCoupon: (state, action) => {
+            state.coupon = state.coupon.concat(action.payload);
             state.isLoading = false;
-            state.coupon = action.payload;
         },
         addInvCoupon: (state, action) => {
             state.isLoading = false;
@@ -41,8 +41,8 @@ const couponSlice = createSlice({
             state.error = null;
         },
         removetoCoupon: (state, action) => {
+            state.coupon = state.coupon.filter((v) => v.id !== action.payload);
             state.isLoading = false;
-            state.coupon = state.coupon.filter((v) => v.id !== action.payload);;
         },
         removeInvCoupon: (state, action) => {
             state.isLoading = false;
@@ -53,14 +53,14 @@ const couponSlice = createSlice({
            
         },
         updatetoCoupon: (state, action) => {
-            state.isLoading = false;
             state.coupon = state.coupon.map((v) => {
                 if (v.id !== action.payload.id) {
                     return action.payload;
                 } else {
                     return v;
                 }
-            })
+            });
+            state.isLoading = false;
         },
         updateInvCoupon: (state, action) => {
             state.isLoading = false;
@@ -95,6 +95,7 @@ export const addCoupon = (data) => async (dispatch) => {
 }
 
 export const removeCoupon = (id) => async (dispatch) => {
+    console.log(id);
     dispatch(removeStartCoupon());
     try {
         const response = await axios.delete(baseURL + "coupon/" + id);
@@ -105,6 +106,7 @@ export const removeCoupon = (id) => async (dispatch) => {
 }
 
 export const updateCoupon = (data) => async (dispatch) => {
+    console.log(data);
     dispatch(updateStartCoupon());
     try {
         const response = await axios.put(baseURL + "coupon/" + data.id, data);
@@ -116,5 +118,10 @@ export const updateCoupon = (data) => async (dispatch) => {
  
 
 export default couponSlice.reducer
+
+
+
+
+
 
 

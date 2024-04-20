@@ -53,7 +53,7 @@ function Coupon(props) {
         coupon_name: string().required(),
         percentage: number().required(),
         expiry_Date: date().required(),
-        // expiry_Date: date().default(() => new Date()),
+        
     });
 
     const formik = useFormik({
@@ -68,7 +68,7 @@ function Coupon(props) {
 
         onSubmit: (values, { resetForm }) => {
             if (update) {
-                dispatch(updateCoupon(values))
+                dispatch(updateCoupon(values.id, values))
             } else {
                 const rNo = Math.floor(Math.random() * 1000);
                 dispatch(addCoupon({ ...values, id: rNo }))
@@ -83,6 +83,7 @@ function Coupon(props) {
     const { handleSubmit, handleChange, handleBlur, values, touched, errors } = formik;
 
     const handleDelete = (id) => {
+        // console.log(id);
         dispatch(removeCoupon(id));
     }
 
