@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProduct } from '../../../redux/action/product.action';
 import { deleteToCart, minusToCart, plusToCart } from '../../../redux/slice/cart.slice';
 
 
 function Cart(props) {
+
 
     const cart = useSelector(state => state.cart)
 
@@ -14,9 +15,54 @@ function Cart(props) {
 
     const dispatch = useDispatch()
 
+
+
     useEffect(() => {
         dispatch(getProduct())
     }, [])
+
+    const coupon = useSelector(state => state.coupon);
+    console.log(coupon);
+
+
+    const [isValid, setIsValid] = useState(false);
+    const [couponApplied, setCouponApplied] = useState('');
+
+    const handleApplyCoupon = () => {
+        if (cartData.length === 0) {
+            alert('Cart is empty');
+        } else {
+            const appliedCouponDetails = coupon.coupon.find(v => v.coupon_name === couponApplied);
+
+            if (appliedCouponDetails) {
+                const date = new Date();
+                const expiry_Date = new Date(appliedCouponDetails.expiry_Date);
+
+                if (date > expiry_Date) {
+                    alert('Coupon is not valid');
+                    setIsValid(false);
+                } else {
+                    console.log('Applied');
+                    setIsValid(true);
+                }
+            } else {
+                console.log('Not Applied');
+                setIsValid(false);
+            }
+        }
+    };
+
+    const getDiscountedTotal = () => {
+        const appliedCouponDetails = coupon.coupon.find(v => v.coupon_name === couponApplied);
+
+        if (appliedCouponDetails) {
+            const discountPercentage = appliedCouponDetails.percentage / 100;
+            return cartData.reduce((a, b) => a + b.price * b.qty, 0) * (1 - discountPercentage);
+        }
+
+        return cartData.reduce((a, b) => a + b.price * b.qty, 0);
+    };
+
 
     const cartData = cart.cart.map((v) => {
         console.log(v.Pid);
@@ -107,7 +153,7 @@ function Cart(props) {
                                             <td>
                                                 <div className="input-group quantity mt-4" style={{ width: 100 }}>
                                                     <div className="input-group-btn">
-                                                        <button onClick={() => handleminus(v.id)} disabled = {v.qty > 1 ? false : true} className="btn btn-sm btn-minus rounded-circle bg-light border">
+                                                        <button onClick={() => handleminus(v.id)} disabled={v.qty > 1 ? false : true} className="btn btn-sm btn-minus rounded-circle bg-light border">
                                                             <i className="fa fa-minus" />
                                                         </button>
                                                     </div>
@@ -123,7 +169,7 @@ function Cart(props) {
                                                 <p className="mb-0 mt-4">{(v.price * v.qty).toFixed(2)}$</p>
                                             </td>
                                             <td>
-                                                <button  onClick={() => handleDelete(v.id)}  className="btn btn-md rounded-circle bg-light border mt-4">
+                                                <button onClick={() => handleDelete(v.id)} className="btn btn-md rounded-circle bg-light border mt-4">
                                                     <i className="fa fa-times text-danger" />
                                                 </button>
                                             </td>
@@ -134,34 +180,77 @@ function Cart(props) {
                         </table>
                     </div>
                     <div className="mt-5">
-                        <input type="text" className="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code" />
-                        <button className="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
+                        <input
+                            type="text"
+                            className="border-0 border-bottom rounded me-5 py-3 mb-4"
+                            placeholder="Coupon Code"
+                            onChange={(e) => setCouponApplied(e.target.value)}
+                        />
+                        <button onClick={handleApplyCoupon} className="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
+                        <span className="ms-5">
+                            {
+                                isValid ? (
+                                    <div className="">
+                                        <p className="text-success mb-0">Coupon Applied: {couponApplied}</p>
+                                        {coupon.coupon.find(v => v.coupon_name === couponApplied && v.expiry_Date) ? (
+                                            <p className="text-muted mt-1">Date Not Valid</p>
+                                        ) : null}
+                                    </div>
+                                ) : (
+                                    <p className="text-danger mb-0">Coupon Not Valid</p>
+                                )
+                            }
+                        </span>
                     </div>
                     <div className="row g-4 justify-content-end">
-                        <div className="col-8" />
-                        <div className="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                            <div className="bg-light rounded">
+                        <div className="col-12 col-sm-8 col-md-7 col-lg-6 col-xl-4">
+                            <div className="bg-light rounded shadow-sm">
                                 <div className="p-4">
                                     <h1 className="display-6 mb-4">Cart <span className="fw-normal">Total</span></h1>
-                                    <div className="d-flex justify-content-between mb-4">
-                                        <h5 className="mb-0 me-4">Subtotal:</h5>
-                                        <p className="mb-0">${totalAmt}</p>
+                                    {
+                                        cartData.map((v, i) => (
+                                            <div key={i} className="mb-3">
+                                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                                    <h5 className="mb-0">{v.name}</h5>
+                                                    <p className="mb-0">$ {v.price}</p>
+                                                </div>
+                                                <div className="d-flex justify-content-between align-items-center">
+                                                    <p className="mb-0">Quantity: {v.qty}</p>
+                                                    <p className="mb-0">$ {(v.price * v.qty)}</p>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                    <div className="py-4 mb-4 border-top border-bottom d-flex justify-content-between align-items-center">
+
+                                        <p className="mb-0 fw-bold text-primary ">
+
+                                            {
+                                                isValid && couponApplied ? (
+                                                    <div className="">
+                                                        <p className="mb-2">Total: <strong>${cartData.reduce((a, b) => a + b.price * b.qty, 0).toFixed(2)}</strong></p>
+                                                        <p className="mb-0">Total After Discount: <strong>${getDiscountedTotal().toFixed(2)}</strong> (<span className="text-success">{coupon.coupon.find(v => v.coupon_name === couponApplied).percentage}% discount applied</span>)</p>
+                                                    </div>
+
+                                                ) : (
+                                                    <div className="">
+                                                        <p className="mb-0">Total: <strong>${cartData.reduce((a, b) => a + b.price * b.qty, 0).toFixed(2)}</strong></p>
+                                                    </div>
+
+                                                )
+                                            }
+
+
+
+
+                                        </p>
+
                                     </div>
-                                    <div className="d-flex justify-content-between">
-                                        <h5 className="mb-0 me-4">Shipping</h5>
-                                        <div className>
-                                            <p className="mb-0">Flat rate: $3.00</p>
-                                        </div>
-                                    </div>
-                                    <p className="mb-0 text-end">Shipping to Ukraine.</p>
+                                    <button className="btn btn-primary rounded-pill px-4 py-2 text-uppercase w-100" type="button">Proceed to Checkout</button>
                                 </div>
-                                <div className="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                                    <h5 className="mb-0 ps-4 me-4">Total</h5>
-                                    <p className="mb-0 pe-4">${totalAmt + 3}</p>
-                                </div>
-                                <button className="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
                             </div>
                         </div>
+                        {/* Cart Page End */}
                     </div>
                 </div>
             </div>
