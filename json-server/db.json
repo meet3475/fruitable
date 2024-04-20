@@ -168,5 +168,21 @@
       "email": "vraj21@gamail.com",
       "review": "fdxgfhj"
     }
+  ],
+  "coupon": [
+    {
+      "id": 939,
+      "coupon_name": "arp123",
+      "percentage": "5",
+      "expiry_Date": "2024-04-25",
+      "date": "2024-04-19"
+    },
+    {
+      "id": 730,
+      "coupon_name": "xyz777",
+      "percentage": "10",
+      "expiry_Date": "2024-05-04",
+      "date": "2024-04-19"
+    }
   ]
 }
