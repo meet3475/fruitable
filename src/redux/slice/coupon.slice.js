@@ -1,6 +1,43 @@
-import { createSlice } from "@reduxjs/toolkit"
-import axios from "axios";
-import { baseURL } from "../../utils/baseURL";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import axios from "axios"
+import { baseURL } from "../../utils/baseURL"
+
+export const addcoupon = createAsyncThunk(
+    'coupon/add',
+    async (data) => {
+       try {
+            const response = await axios.post(baseURL + "coupon", data)
+            return response.data
+       } catch (error) {
+            console.log(error.message);
+       }
+    }
+)
+
+export const getCoupon = createAsyncThunk(
+    'coupon/get',
+    async () => {
+        try {
+            const response = await axios.get(baseURL + "coupon")
+            return response.data
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+)
+
+export const deleteCoupon = createAsyncThunk(
+    'coupon/delete',
+    async (id) => {
+        try {
+            const response =  await axios.delete(baseURL + "coupon/" + id)
+            return response.data.id
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+)
+
 
 const initialState = {
     isLoading: false,
@@ -11,109 +48,27 @@ const initialState = {
 const couponSlice = createSlice({
     name: 'coupon',
     initialState,
-    reducers: {
-        getStartCoupon: (state, action) => {
-            state.isLoading = true;
-            state.error = null;
-        },
-        gettoCoupon: (state, action) => {
-            state.coupon = action.payload;
-            state.isLoading = false;
-        },
-        getInvCoupon: (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
-        },
-        addStartCoupon: (state, action) => {
-            state.isLoading = true;
-            state.error = null;
-        },
-        addtoCoupon: (state, action) => {
-            state.coupon = state.coupon.concat(action.payload);
-            state.isLoading = false;
-        },
-        addInvCoupon: (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
-        },
-        removeStartCoupon: (state, action) => {
-            state.isLoading = true;
-            state.error = null;
-        },
-        removetoCoupon: (state, action) => {
-            state.coupon = state.coupon.filter((v) => v.id !== action.payload);
-            state.isLoading = false;
-        },
-        removeInvCoupon: (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
-        },
-        updateStartCoupon: (state, action) => {
-            state.isLoading = true;
-           
-        },
-        updatetoCoupon: (state, action) => {
-            state.coupon = state.coupon.map((v) => {
-                if (v.id !== action.payload.id) {
-                    return action.payload;
-                } else {
-                    return v;
-                }
-            });
-            state.isLoading = false;
-        },
-        updateInvCoupon: (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
-        },
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(addcoupon.fulfilled, (state, action) => {
+            console.log(action);
+            state.coupon = state.coupon.concat(action.payload)
+        })
 
-    }
+        builder.addCase(getCoupon.fulfilled, (state, action) => {
+            console.log(action);
+            state.coupon = (action.payload)
+        })
+        
+        builder.addCase(deleteCoupon.fulfilled, (state, action) => {
+            console.log(action);
+            state.coupon = state.coupon.filter((v) => v.id !== action.payload)
+        })
+    },
+
 })
 
-export const { getStartCoupon, gettoCoupon, getInvCoupon, addStartCoupon, addtoCoupon, addInvCoupon, removeStartCoupon, removetoCoupon, removeInvCoupon, updateStartCoupon, updatetoCoupon, updateInvCoupon } = couponSlice.actions;
 
-
-export const getCoupon = () => async (dispatch) => {
-    dispatch(getStartCoupon());
-    try {
-        const response = await axios.get(baseURL + "coupon");
-        dispatch(gettoCoupon(response.data));
-    } catch (error) {
-        dispatch(getInvCoupon(error.message));
-    }
-}
-
-
-export const addCoupon = (data) => async (dispatch) => {
-    dispatch(addStartCoupon());
-    try {
-        const response = await axios.post(baseURL + "coupon", data);
-        dispatch(addtoCoupon(response.data))
-    } catch (error) {
-        dispatch(addInvCoupon(error.message))
-    }
-}
-
-export const removeCoupon = (id) => async (dispatch) => {
-    dispatch(removeStartCoupon());
-    try {
-        await axios.delete(baseURL + "coupon/" + id);
-        dispatch(removetoCoupon(id));
-    } catch (error) {
-        dispatch(removeInvCoupon(error.message));
-    }
-}
-
-export const updateCoupon = (data) => async (dispatch) => {
-    dispatch(updateStartCoupon());
-    try {
-        const response = await axios.put(baseURL + "coupon/" + data.id, data);
-        dispatch(updatetoCoupon(response.data));
-    } catch (error) {
-        dispatch(updateInvCoupon(error.message));
-    }
-}
- 
 
 export default couponSlice.reducer
 

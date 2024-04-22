@@ -12,13 +12,14 @@ import { object, string, number, date, InferType } from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useFormik } from 'formik';
-import { addCoupon, getCoupon, removeCoupon, updateCoupon } from '../../../redux/slice/coupon.slice';
+
 
 import { DataGrid } from '@mui/x-data-grid';
 
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { addcoupon, deleteCoupon, getCoupon } from '../../../redux/slice/coupon.slice';
 
 
 function Coupon(props) {
@@ -28,7 +29,6 @@ function Coupon(props) {
     const [update, setUpdate] = useState(false);
 
     const dispatch = useDispatch()
-
 
     const coupon = useSelector(state => state.coupon);
     console.log(coupon);
@@ -45,7 +45,7 @@ function Coupon(props) {
 
     
     useEffect(() => {
-        dispatch(getCoupon());
+        dispatch(getCoupon())
     }, []);
 
 
@@ -61,17 +61,15 @@ function Coupon(props) {
             coupon_name: '',
             percentage: '',
             expiry_Date: '',
-            date: new Date().toISOString().split('T')[0]
         },
 
         validationSchema: couponSchema,
 
         onSubmit: (values, { resetForm }) => {
             if (update) {
-                dispatch(updateCoupon(values))
+                
             } else {
-                const rNo = Math.floor(Math.random() * 1000);
-                dispatch(addCoupon({ ...values, id: rNo }))
+                dispatch(addcoupon(values))
             }
             resetForm();
             handleClose();
@@ -83,8 +81,8 @@ function Coupon(props) {
     const { handleSubmit, handleChange, handleBlur, values, touched, errors } = formik;
 
     const handleDelete = (id) => {
-        // console.log(id);
-        dispatch(removeCoupon(id));
+        console.log(id);
+        dispatch(deleteCoupon(id))
     }
 
     const handleEdit = (data) => {
@@ -97,7 +95,6 @@ function Coupon(props) {
         { field: 'coupon_name', headerName: 'Coupon Name', width: 170 },
         { field: 'percentage', headerName: 'Discount Percentage', width: 170 },
         { field: 'expiry_Date', headerName: 'Expiry Date', width: 170 },
-        { field: 'date', headerName: 'Created Date', width: 170 },
         {
             field: 'Action',
             headerName: 'Action',
