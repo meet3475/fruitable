@@ -19,7 +19,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { addcoupon, deleteCoupon, getCoupon } from '../../../redux/slice/coupon.slice';
+import { addcoupon, deleteCoupon, getCoupon, updateCoupon } from '../../../redux/slice/coupon.slice';
 
 
 function Coupon(props) {
@@ -67,7 +67,7 @@ function Coupon(props) {
 
         onSubmit: (values, { resetForm }) => {
             if (update) {
-                
+                dispatch(updateCoupon(values))
             } else {
                 dispatch(addcoupon(values))
             }

@@ -38,6 +38,18 @@ export const deleteCoupon = createAsyncThunk(
     }
 )
 
+export const updateCoupon = createAsyncThunk(
+    'coupon/update',
+    async (data) => {
+        try {
+            const response =  await axios.put(baseURL + "coupon/" + data.id, data)
+            return response.data
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+)
+
 
 const initialState = {
     isLoading: false,
@@ -63,6 +75,17 @@ const couponSlice = createSlice({
         builder.addCase(deleteCoupon.fulfilled, (state, action) => {
             console.log(action);
             state.coupon = state.coupon.filter((v) => v.id !== action.payload)
+        })
+
+        builder.addCase(updateCoupon.fulfilled, (state, action) => {
+            console.log(action);
+            state.coupon = state.coupon.map((v) => {
+                if (v.id === action.payload.id) {
+                    return action.payload
+                } else {
+                    return v
+                }
+            })
         })
     },
 
