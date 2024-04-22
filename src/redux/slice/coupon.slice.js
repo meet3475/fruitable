@@ -70,52 +70,7 @@ const couponSlice = createSlice({
     }
 })
 
-export const { getStartCoupon, gettoCoupon, getInvCoupon, addStartCoupon, addtoCoupon, addInvCoupon, removeStartCoupon, removetoCoupon, removeInvCoupon, updateStartCoupon, updatetoCoupon, updateInvCoupon } = couponSlice.actions;
 
-
-export const getCoupon = () => async (dispatch) => {
-    dispatch(getStartCoupon());
-    try {
-        const response = await axios.get(baseURL + "coupon");
-        dispatch(gettoCoupon(response.data));
-    } catch (error) {
-        dispatch(getInvCoupon(error.message));
-    }
-}
-
-
-export const addCoupon = (data) => async (dispatch) => {
-    dispatch(addStartCoupon());
-    try {
-        const response = await axios.post(baseURL + "coupon", data);
-        dispatch(addtoCoupon(response.data))
-    } catch (error) {
-        dispatch(addInvCoupon(error.message))
-    }
-}
-
-export const removeCoupon = (id) => async (dispatch) => {
-    console.log(id);
-    dispatch(removeStartCoupon());
-    try {
-        const response = await axios.delete(baseURL + "coupon/" + id);
-        dispatch(removetoCoupon(response.id))
-    } catch (error) {
-        dispatch(removeInvCoupon(error.message))
-    }
-}
-
-export const updateCoupon = (data) => async (dispatch) => {
-    console.log(data);
-    dispatch(updateStartCoupon());
-    try {
-        const response = await axios.put(baseURL + "coupon/" + data.id, data);
-        dispatch(updatetoCoupon(response.data));
-    } catch (error) {
-        dispatch(updateInvCoupon(error.message))
-    }
-}
- 
 
 export default couponSlice.reducer
 
