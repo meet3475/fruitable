@@ -1,68 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProduct } from '../../../redux/action/product.action';
 import { deleteToCart, minusToCart, plusToCart } from '../../../redux/slice/cart.slice';
 
+import { useFormik } from 'formik';
+
+import { object, string } from 'yup';
+import { getCoupon } from '../../../redux/slice/coupon.slice';
+
 
 function Cart(props) {
-
 
     const cart = useSelector(state => state.cart)
 
     const product = useSelector(state => state.product)
 
+    const coupon = useSelector(state => state.coupon);
+    console.log(coupon);
+
     console.log(cart, product);
 
     const dispatch = useDispatch()
 
-
-
     useEffect(() => {
-        dispatch(getProduct())
+        dispatch(getProduct());
+        dispatch(getCoupon())
     }, [])
-
-    const coupon = useSelector(state => state.coupon);
-    console.log(coupon);
-
-
-    const [isValid, setIsValid] = useState(false);
-    const [couponApplied, setCouponApplied] = useState('');
-
-    const handleApplyCoupon = () => {
-        if (cartData.length === 0) {
-            alert('Cart is empty');
-        } else {
-            const appliedCouponDetails = coupon.coupon.find(v => v.coupon_name === couponApplied);
-
-            if (appliedCouponDetails) {
-                const date = new Date();
-                const expiry_Date = new Date(appliedCouponDetails.expiry_Date);
-
-                if (date > expiry_Date) {
-                    alert('Coupon is not valid');
-                    setIsValid(false);
-                } else {
-                    console.log('Applied');
-                    setIsValid(true);
-                }
-            } else {
-                console.log('Not Applied');
-                setIsValid(false);
-            }
-        }
-    };
-
-    const getDiscountedTotal = () => {
-        const appliedCouponDetails = coupon.coupon.find(v => v.coupon_name === couponApplied);
-
-        if (appliedCouponDetails) {
-            const discountPercentage = appliedCouponDetails.percentage / 100;
-            return cartData.reduce((a, b) => a + b.price * b.qty, 0) * (1 - discountPercentage);
-        }
-
-        return cartData.reduce((a, b) => a + b.price * b.qty, 0);
-    };
-
 
     const cartData = cart.cart.map((v) => {
         console.log(v.Pid);
@@ -89,6 +52,58 @@ function Cart(props) {
 
     const totalAmt = cartData.reduce((acc, v) => acc + v.qty * v.price, 0);
     console.log(totalAmt);
+
+    const  handleCoupon = (data) => {
+
+        console.log( data);
+        let flag = 0;
+        coupon.coupon.map((v) => {
+            
+
+            if (v.coupon_name === data.coupon) {
+
+                const CreatedDate = new Date()
+                
+                const ExpiryDate = new Date(v.expiry_Date)
+
+                console.log(CreatedDate, ExpiryDate);
+
+                if (CreatedDate <= ExpiryDate) {
+                    flag = 1;
+                } else {
+                    flag = 2;
+                }
+            }
+        })
+
+        if (flag === 0) {
+            formik.setFieldError("coupon", "Invalid coupon")
+        } else if (flag === 1) {
+            formik.setFieldError("coupon", "Coupon Aplied Succesfully")
+        } else if (flag === 2){
+            formik.setFieldError("coupon", "Coupon Expiry")
+        }
+    } 
+
+
+    let couonSchema = object({
+        coupon: string().required("Please entre Coupon"),
+    });
+
+
+    const formik = useFormik({
+        initialValues: {
+            coupon: '',
+        },
+        validationSchema: couonSchema,
+        onSubmit: values => {
+            handleCoupon(values)
+        },
+    });
+
+
+    const { handleSubmit, handleChange, handleBlur, values, touched, errors } = formik;
+
 
     return (
         <div>
@@ -180,77 +195,49 @@ function Cart(props) {
                         </table>
                     </div>
                     <div className="mt-5">
-                        <input
-                            type="text"
-                            className="border-0 border-bottom rounded me-5 py-3 mb-4"
-                            placeholder="Coupon Code"
-                            onChange={(e) => setCouponApplied(e.target.value)}
-                        />
-                        <button onClick={handleApplyCoupon} className="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
-                        <span className="ms-5">
-                            {
-                                isValid ? (
-                                    <div className="">
-                                        <p className="text-success mb-0">Coupon Applied: {couponApplied}</p>
-                                        {coupon.coupon.find(v => v.coupon_name === couponApplied && v.expiry_Date) ? (
-                                            <p className="text-muted mt-1">Date Not Valid</p>
-                                        ) : null}
-                                    </div>
-                                ) : (
-                                    <p className="text-danger mb-0">Coupon Not Valid</p>
-                                )
-                            }
-                        </span>
+                        <form onSubmit={handleSubmit}>
+                            <input
+                                name='coupon'
+                                type="text"
+                                className="border-0 border-bottom rounded me-5 py-3 mb-4"
+                                placeholder="Coupon Code"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.coupon}
+                            />
+                            {errors.coupon && touched.coupon ? <span style={{ color: "red", margin: "20px"}} >{errors.coupon}</span> : null}
+                            <button
+                                className="btn border-secondary rounded-pill px-4 py-3 text-primary"
+                                type="submit">
+                                Apply Coupon
+                            </button>
+                        </form>
                     </div>
                     <div className="row g-4 justify-content-end">
-                        <div className="col-12 col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                            <div className="bg-light rounded shadow-sm">
+                        <div className="col-8" />
+                        <div className="col-sm-8 col-md-7 col-lg-6 col-xl-4">
+                            <div className="bg-light rounded">
                                 <div className="p-4">
                                     <h1 className="display-6 mb-4">Cart <span className="fw-normal">Total</span></h1>
-                                    {
-                                        cartData.map((v, i) => (
-                                            <div key={i} className="mb-3">
-                                                <div className="d-flex justify-content-between align-items-center mb-2">
-                                                    <h5 className="mb-0">{v.name}</h5>
-                                                    <p className="mb-0">$ {v.price}</p>
-                                                </div>
-                                                <div className="d-flex justify-content-between align-items-center">
-                                                    <p className="mb-0">Quantity: {v.qty}</p>
-                                                    <p className="mb-0">$ {(v.price * v.qty)}</p>
-                                                </div>
-                                            </div>
-                                        ))
-                                    }
-                                    <div className="py-4 mb-4 border-top border-bottom d-flex justify-content-between align-items-center">
-
-                                        <p className="mb-0 fw-bold text-primary ">
-
-                                            {
-                                                isValid && couponApplied ? (
-                                                    <div className="">
-                                                        <p className="mb-2">Total: <strong>${cartData.reduce((a, b) => a + b.price * b.qty, 0).toFixed(2)}</strong></p>
-                                                        <p className="mb-0">Total After Discount: <strong>${getDiscountedTotal().toFixed(2)}</strong> (<span className="text-success">{coupon.coupon.find(v => v.coupon_name === couponApplied).percentage}% discount applied</span>)</p>
-                                                    </div>
-
-                                                ) : (
-                                                    <div className="">
-                                                        <p className="mb-0">Total: <strong>${cartData.reduce((a, b) => a + b.price * b.qty, 0).toFixed(2)}</strong></p>
-                                                    </div>
-
-                                                )
-                                            }
-
-
-
-
-                                        </p>
-
+                                    <div className="d-flex justify-content-between mb-4">
+                                        <h5 className="mb-0 me-4">Subtotal:</h5>
+                                        <p className="mb-0">${totalAmt}</p>
                                     </div>
-                                    <button className="btn btn-primary rounded-pill px-4 py-2 text-uppercase w-100" type="button">Proceed to Checkout</button>
+                                    <div className="d-flex justify-content-between">
+                                        <h5 className="mb-0 me-4">Shipping</h5>
+                                        <div className>
+                                            <p className="mb-0">Flat rate: $3.00</p>
+                                        </div>
+                                    </div>
+                                    <p className="mb-0 text-end">Shipping to Ukraine.</p>
                                 </div>
+                                <div className="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+                                    <h5 className="mb-0 ps-4 me-4">Total</h5>
+                                    <p className="mb-0 pe-4">${totalAmt + 3}</p>
+                                </div>
+                                <button className="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
                             </div>
                         </div>
-                        {/* Cart Page End */}
                     </div>
                 </div>
             </div>
