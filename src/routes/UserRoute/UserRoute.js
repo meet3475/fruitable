@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Header from '../../user/components/Header/Header';
 import { Route, Routes } from 'react-router-dom';
 import Home from '../../user/containers/Home/Home';
@@ -12,11 +12,16 @@ import Footer from '../../user/components/Footer/Footer';
 import ShopDetail from '../../user/containers/ShopDetail/ShopDetail';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import Review from '../../user/containers/Review/Review';
+import { ThemeContext } from '../../Context/ThemeContext';
 
 
 function UserRoute(props) {
+
+    const theme = useContext(ThemeContext);
+    console.log(theme);
+
     return (
-        <div>
+        <div className={theme.theme}>
             <>
                 <Header />
                 <Routes>

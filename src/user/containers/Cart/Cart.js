@@ -11,8 +11,7 @@ import { getCoupon } from '../../../redux/slice/coupon.slice';
 
 function Cart(props) {
 
-    // const [isValid, setIsValid] = useState(false);
-    // const [couponDisCount, setCouponDisCount] = useState('');
+    const [couponDisCount, setCouponDisCount] = useState(0);
 
     const cart = useSelector(state => state.cart)
 
@@ -56,12 +55,15 @@ function Cart(props) {
     const totalAmt = cartData.reduce((acc, v) => acc + v.qty * v.price, 0);
     console.log(totalAmt);
 
+
+
     const handleCoupon = (data) => {
 
         console.log(data);
         let flag = 0;
-        coupon.coupon.map((v) => {
+        let per = 0;
 
+        coupon.coupon.map((v) => {
 
             if (v.coupon_name === data.coupon) {
 
@@ -73,6 +75,8 @@ function Cart(props) {
 
                 if (CreatedDate <= ExpiryDate) {
                     flag = 1;
+                    per = (v.percentage)
+                    setCouponDisCount(per)
                 } else {
                     flag = 2;
                 }
@@ -82,24 +86,20 @@ function Cart(props) {
         if (flag === 0) {
             formik.setFieldError("coupon", "Invalid coupon")
         } else if (flag === 1) {
-            formik.setFieldError("coupon", "Coupon Aplied Succesfully")
+            formik.setFieldError("coupon", `Coupon Aplied Succesfully & You got ${per} Discount`)
         } else if (flag === 2) {
             formik.setFieldError("coupon", "Coupon Expiry")
         }
     }
 
-    // const getDiscountedTotal = () => {
-    //     const appliedDiscountDetails = coupon.coupon.find(v => v.coupon_name === couponDisCount);
 
-    //     if (appliedDiscountDetails) {
 
-    //         const discountPercentage = appliedDiscountDetails.percentage / 100;
+    const DiscountAmt = totalAmt * (couponDisCount / 100)
 
-    //         return cartData.reduce((a, b) => a + b.price * b.qty, 0) * (1 - discountPercentage);
-    //     }
+    console.log(DiscountAmt);
 
-    //     return cartData.reduce((a, b) => a + b.price * b.qty, 0);
-    // };
+    const TotalBill = totalAmt - DiscountAmt
+
 
 
     let couonSchema = object({
@@ -237,45 +237,35 @@ function Cart(props) {
                                     <h1 className="display-6 mb-4">Cart <span className="fw-normal">Total</span></h1>
                                     <div className="d-flex justify-content-between mb-4">
                                         <h5 className="mb-0 me-4">Subtotal:</h5>
-                                        <p className="mb-0">${totalAmt}</p>
+                                        <p className="mb-0">${totalAmt.toFixed(2)}</p>
                                     </div>
-                                    <div className="d-flex justify-content-between">
-                                        <h5 className="mb-0 me-4">Shipping</h5>
-                                        <div className>
-                                            <p className="mb-0">Flat rate: $3.00</p>
-                                        </div>
-                                    </div>
-                                    <p className="mb-0 text-end">Shipping to Ukraine.</p>
+                                    {
+                                        DiscountAmt > 0 ?
+                                            <div className="d-flex justify-content-between mb-4">
+                                                <h5 className="mb-0 me-4">Discount:</h5>
+                                                <p className="mb-0">${DiscountAmt.toFixed(2)}</p>
+                                            </div> : ''
+                                    }
+                                    {
+                                        TotalBill < 500 ?
+                                            <>
+                                                <div className="d-flex justify-content-between">
+                                                    <h5 className="mb-0 me-4">Shipping</h5>
+                                                    <div className>
+                                                        <p className="mb-0">Flat rate: ${100}</p>
+                                                    </div>
+                                                </div>
+                                                <p className="mb-0 text-end">Shipping to Ukraine.</p>
+                                            </>
+                                            : null
+                                    }
+
                                 </div>
                                 <div className="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                                     <h5 className="mb-0 ps-4 me-4">Total</h5>
-                                    <p className="mb-0 pe-4">${totalAmt + 3}</p>
+                                    <p className="mb-0 pe-4">${TotalBill < 500 ? TotalBill + 100 : TotalBill}</p>
                                 </div>
-                                {/* <div className="py-4 mb-4 border-top border-bottom d-flex justify-content-between align-items-center">
 
-                                    <p className="mb-0 fw-bold text-primary ">
-
-                                        {
-                                            isValid && couponDisCount ? (
-                                                <div className="">
-                                                    <p className="mb-2">Total: <strong>${cartData.reduce((a, b) => a + b.price * b.qty, 0).toFixed(2)}</strong></p>
-                                                    <p className="mb-0">Total After Discount: <strong>${getDiscountedTotal().toFixed(2)}</strong> (<span className="text-success">{coupon.coupon.find(v => v.coupon_name === couponDisCount).percentage}% discount applied</span>)</p>
-                                                </div>
-
-                                            ) : (
-                                                <div className="">
-                                                    <p className="mb-0">Total: <strong>${cartData.reduce((a, b) => a + b.price * b.qty, 0).toFixed(2)}</strong></p>
-                                                </div>
-
-                                            )
-                                        }
-
-
-
-
-                                    </p>
-
-                                </div> */}
                                 <button className="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
                             </div>
                         </div>

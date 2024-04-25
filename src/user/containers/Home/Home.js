@@ -129,7 +129,7 @@ function Home(props) {
             {
               facilities.facilities.map((v, i) => (
                 <div className="col-md-6 col-lg-3">
-                  <div className="featurs-item text-center rounded bg-light p-4">
+                  <div className="featurs-item text-center rounded  p-4">
                     <div className="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
                       <i className="fas fa-car-side fa-3x text-white" />
                     </div>
@@ -706,7 +706,7 @@ function Home(props) {
           </div>
           <div className="row g-4">
             <div className="col-lg-6 col-xl-4">
-              <div className="p-4 rounded bg-light">
+              <div className="p-4 rounded ">
                 <div className="row align-items-center">
                   <div className="col-6">
                     <img src="img/best-product-1.jpg" className="img-fluid rounded-circle w-100" alt />
@@ -727,7 +727,7 @@ function Home(props) {
               </div>
             </div>
             <div className="col-lg-6 col-xl-4">
-              <div className="p-4 rounded bg-light">
+              <div className="p-4 rounded ">
                 <div className="row align-items-center">
                   <div className="col-6">
                     <img src="img/best-product-2.jpg" className="img-fluid rounded-circle w-100" alt />
@@ -748,7 +748,7 @@ function Home(props) {
               </div>
             </div>
             <div className="col-lg-6 col-xl-4">
-              <div className="p-4 rounded bg-light">
+              <div className="p-4 rounded">
                 <div className="row align-items-center">
                   <div className="col-6">
                     <img src="img/best-product-3.jpg" className="img-fluid rounded-circle w-100" alt />
@@ -769,7 +769,7 @@ function Home(props) {
               </div>
             </div>
             <div className="col-lg-6 col-xl-4">
-              <div className="p-4 rounded bg-light">
+              <div className="p-4 rounded ">
                 <div className="row align-items-center">
                   <div className="col-6">
                     <img src="img/best-product-4.jpg" className="img-fluid rounded-circle w-100" alt />
@@ -790,7 +790,7 @@ function Home(props) {
               </div>
             </div>
             <div className="col-lg-6 col-xl-4">
-              <div className="p-4 rounded bg-light">
+              <div className="p-4 rounded ">
                 <div className="row align-items-center">
                   <div className="col-6">
                     <img src="img/best-product-5.jpg" className="img-fluid rounded-circle w-100" alt />
@@ -811,7 +811,7 @@ function Home(props) {
               </div>
             </div>
             <div className="col-lg-6 col-xl-4">
-              <div className="p-4 rounded bg-light">
+              <div className="p-4 rounded ">
                 <div className="row align-items-center">
                   <div className="col-6">
                     <img src="img/best-product-6.jpg" className="img-fluid rounded-circle w-100" alt />
@@ -906,31 +906,31 @@ function Home(props) {
       {/* Fact Start */}
       <div className="container-fluid py-5">
         <div className="container">
-          <div className="bg-light p-5 rounded">
+          <div className="p-5 rounded">
             <div className="row g-4 justify-content-center">
               <div className="col-md-6 col-lg-6 col-xl-3">
-                <div className="counter bg-white rounded p-5">
+                <div className="counter  rounded p-5">
                   <i className="fa fa-users text-secondary" />
                   <h4>satisfied customers</h4>
                   <h1>1963</h1>
                 </div>
               </div>
               <div className="col-md-6 col-lg-6 col-xl-3">
-                <div className="counter bg-white rounded p-5">
+                <div className="counter  rounded p-5">
                   <i className="fa fa-users text-secondary" />
                   <h4>quality of service</h4>
                   <h1>99%</h1>
                 </div>
               </div>
               <div className="col-md-6 col-lg-6 col-xl-3">
-                <div className="counter bg-white rounded p-5">
+                <div className="counter  rounded p-5">
                   <i className="fa fa-users text-secondary" />
                   <h4>quality certificates</h4>
                   <h1>33</h1>
                 </div>
               </div>
               <div className="col-md-6 col-lg-6 col-xl-3">
-                <div className="counter bg-white rounded p-5">
+                <div className="counter  rounded p-5">
                   <i className="fa fa-users text-secondary" />
                   <h4>Available Products</h4>
                   <h1>789</h1>
@@ -949,7 +949,7 @@ function Home(props) {
             <h1 className="display-5 mb-5 text-dark">Our Client Saying!</h1>
           </div>
           <OwlCarousel {...testimonial_carousel} className="owl-carousel testimonial-carousel">
-            <div className="testimonial-item img-border-radius bg-light rounded p-4">
+            <div className="testimonial-item img-border-radius  rounded p-4">
               <div className="position-relative">
                 <i className="fa fa-quote-right fa-2x text-secondary position-absolute" style={{ bottom: 30, right: 0 }} />
                 <div className="mb-4 pb-4 border-bottom border-secondary">
@@ -974,7 +974,7 @@ function Home(props) {
                 </div>
               </div>
             </div>
-            <div className="testimonial-item img-border-radius bg-light rounded p-4">
+            <div className="testimonial-item img-border-radius  rounded p-4">
               <div className="position-relative">
                 <i className="fa fa-quote-right fa-2x text-secondary position-absolute" style={{ bottom: 30, right: 0 }} />
                 <div className="mb-4 pb-4 border-bottom border-secondary">
@@ -999,7 +999,7 @@ function Home(props) {
                 </div>
               </div>
             </div>
-            <div className="testimonial-item img-border-radius bg-light rounded p-4">
+            <div className="testimonial-item img-border-radius  rounded p-4">
               <div className="position-relative">
                 <i className="fa fa-quote-right fa-2x text-secondary position-absolute" style={{ bottom: 30, right: 0 }} />
                 <div className="mb-4 pb-4 border-bottom border-secondary">

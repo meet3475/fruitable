@@ -1,18 +1,30 @@
-import React from 'react';
+
+import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { ThemeContext } from '../../../Context/ThemeContext';
+
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 
 function Header(props) {
 
   const cart = useSelector(state => state.cart)
   console.log(cart);
 
- const totalQtyData = cart.cart.reduce((acc, v) => acc + v.qty, 0);
+  const totalQtyData = cart.cart.reduce((acc, v) => acc + v.qty, 0);
+
+  const themeContext = useContext(ThemeContext);
+  console.log(themeContext);
+
+  const handleTheme = () => {
+    themeContext.toggleTheme(themeContext.theme);
+  }
 
   return (
     <div>
       {/* Navbar start */}
-      <div className="container-fluid fixed-top">
+      <div className={`container-fluid fixed-top ${themeContext.theme}`} >
         <div className="container topbar bg-primary d-none d-lg-block">
           <div className="d-flex justify-content-between">
             <div className="top-info ps-2">
@@ -24,15 +36,18 @@ function Header(props) {
               <a href="#" className="text-white"><small className="text-white mx-2">Terms of Use</small>/</a>
               <a href="#" className="text-white"><small className="text-white ms-2">Sales and Refunds</small></a>
             </div>
+            {
+              themeContext.theme === 'light' ? <LightModeIcon onClick={handleTheme} /> :  <DarkModeIcon  onClick={handleTheme} />
+            }
           </div>
         </div>
         <div className="container px-0">
-          <nav className="navbar navbar-light bg-white navbar-expand-xl">
+          <nav className="navbar navbar-light  navbar-expand-xl">
             <a href="index.html" className="navbar-brand"><h1 className="text-primary display-6">Fruitables</h1></a>
             <button className="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
               <span className="fa fa-bars text-primary" />
             </button>
-            <div className="collapse navbar-collapse bg-white" id="navbarCollapse">
+            <div className="collapse navbar-collapse " id="navbarCollapse">
               <div className="navbar-nav mx-auto">
                 <NavLink to='/' className="nav-item nav-link active">Home</NavLink>
                 <NavLink to='/Shop' className="nav-item nav-link">Shop</NavLink>
@@ -53,12 +68,12 @@ function Header(props) {
                 <button className="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i className="fas fa-search text-primary" /></button>
                 <NavLink to={`/Cart`} className="position-relative me-4 my-auto">
                   <i className="fa fa-shopping-bag fa-2x" />
-                    <span
-                      className="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                      style={{ top: '-5px', left: 15, height: 20, minWidth: 20 }}
-                    >
-                      {totalQtyData}
-                    </span>
+                  <span
+                    className="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
+                    style={{ top: '-5px', left: 15, height: 20, minWidth: 20 }}
+                  >
+                    {totalQtyData}
+                  </span>
                 </NavLink>
                 <a href="#" className="my-auto">
                   <i className="fas fa-user fa-2x" />
