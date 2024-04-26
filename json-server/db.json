@@ -66,6 +66,34 @@
   ],
   "product": [
     {
+      "id": "1",
+      "name": "Grapes",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-5.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Grapes",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-5.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Raspberries",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-2.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Apricots",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+      "price": 4.99,
+      "image": "img/fruite-item-4.jpg"
+    },
+    {
       "id": "5",
       "name": "orange",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
@@ -129,28 +157,72 @@
       "review": "Best Product"
     },
     {
-      "id": "916a",
-      "name": "amit",
-      "email": "xyz444@gamil.com",
-      "review": "dhfkgj"
-    },
-    {
       "id": "4c2c",
-      "name": "Dobariya Meet  b",
+      "name": "Dobariya Meet  ",
       "email": "meetdobariya480@gmail.com",
-      "review": "asvb"
-    },
-    {
-      "id": "394f",
-      "name": "Dobariya Meet",
-      "email": "meet1232@gmail.com",
-      "review": "sfdsgnbhv"
+      "review": "ggggg"
     },
     {
       "id": "81bb",
       "name": "Dobariya",
       "email": "vraj21@gamail.com",
       "review": "fdxgfhj"
+    },
+    {
+      "id": "af02",
+      "name": "Dobariya Meet",
+      "email": "meetdobariya480@gmail.com",
+      "review": "best product"
+    },
+    {
+      "id": "8fcb",
+      "name": "Dobariya Meet",
+      "email": "vraj21@gamail.com",
+      "review": "gvhj"
+    },
+    {
+      "id": "b33e",
+      "name": "Dobariya Meet",
+      "email": "vraj21@gamail.com",
+      "review": "best"
+    },
+    {
+      "id": "c88d",
+      "name": "Dobariya Meet",
+      "email": "meetdobariya480@gmail.com",
+      "review": "best"
+    },
+    {
+      "id": "a049",
+      "name": "Dobariya Meet",
+      "email": "meetdobariya480@gmail.com",
+      "review": "foj"
+    }
+  ],
+  "coupon": [
+    {
+      "id": "836a",
+      "coupon_name": "arp123",
+      "percentage": "12",
+      "expiry_Date": "2024-04-26"
+    },
+    {
+      "id": "be80",
+      "coupon_name": "xyz789",
+      "percentage": "5",
+      "expiry_Date": "2024-04-12"
+    },
+    {
+      "id": "aec9",
+      "coupon_name": "zzzcv89",
+      "percentage": "18",
+      "expiry_Date": "2024-05-25"
+    },
+    {
+      "id": "e764",
+      "coupon_name": "xyz777",
+      "percentage": "10",
+      "expiry_Date": "2024-05-09"
     }
   ]
 }
