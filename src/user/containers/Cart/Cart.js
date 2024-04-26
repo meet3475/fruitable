@@ -232,7 +232,7 @@ function Cart(props) {
                     <div className="row g-4 justify-content-end">
                         <div className="col-8" />
                         <div className="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                            <div className="bg-light rounded">
+                            <div className=" rounded">
                                 <div className="p-4">
                                     <h1 className="display-6 mb-4">Cart <span className="fw-normal">Total</span></h1>
                                     <div className="d-flex justify-content-between mb-4">
