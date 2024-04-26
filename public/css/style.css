@@ -231,7 +231,7 @@
 
     .hero-header,
     .page-header {
-        margin-top: 152px !important;
+        margin-top: 153px !important;
     }
 }
 
@@ -521,3 +521,27 @@
     color: white !important;
 }
 
+.my-auto {
+    margin-right: 20px;
+}
+
+.hero-dark {
+    background: none;
+    border:  1px solid;
+    border-color: #ffb524 !important;
+    border-radius: 10px !important;
+    border-right: 3px solid;
+    
+}
+
+.dark h4 {
+    color: white !important;
+}
+
+.dark p {
+    color: white !important;
+}
+
+.dark th {
+    color: white !important;
+}

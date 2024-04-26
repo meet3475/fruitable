@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getShop } from '../../../redux/action/shop.action';
 import { addToCart } from '../../../redux/slice/cart.slice';
+import { ThemeContext } from '../../../Context/ThemeContext';
 
 function Shop(props) {
 
@@ -34,6 +35,8 @@ function Shop(props) {
   React.useEffect(() => {
     dispatch(getShop())
   }, [])
+
+  const theme = useContext(ThemeContext);
 
 
   return (
@@ -69,7 +72,7 @@ function Shop(props) {
       {/* Fruits Shop Start*/}
       <div className="container-fluid fruite py-5">
         <div className="container py-5">
-          <h1 className="mb-4">Fresh fruits shop</h1>
+          <h2 className={`mb-4 ${theme.theme}`}>Fresh fruits shop</h2>
           <div className="row g-4">
             <div className="col-lg-12">
               <div className="row g-4">
@@ -82,7 +85,7 @@ function Shop(props) {
                 <div className="col-6" />
                 <div className="col-xl-3">
                   <div className="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
-                    <label htmlFor="fruits">Default Sorting:</label>
+                    <h6 htmlFor="fruits">Default Sorting:</h6>
                     <select id="fruits" name="fruitlist" className="border-0 form-select-sm bg-light me-3" form="fruitform">
                       <option value="volvo">Nothing</option>
                       <option value="saab">Popularity</option>
@@ -171,7 +174,7 @@ function Shop(props) {
                           <img src="img/featur-1.jpg" className="img-fluid rounded" alt />
                         </div>
                         <div>
-                          <h6 className="mb-2">Big Banana</h6>
+                          <h4 className="mb-2">Big Banana</h4>
                           <div className="d-flex mb-2">
                             <i className="fa fa-star text-secondary" />
                             <i className="fa fa-star text-secondary" />
@@ -180,7 +183,7 @@ function Shop(props) {
                             <i className="fa fa-star" />
                           </div>
                           <div className="d-flex mb-2">
-                            <h5 className="fw-bold me-2">2.99 $</h5>
+                            <h4 className="fw-bold me-2">2.99 $</h4>
                             <h5 className="text-danger text-decoration-line-through">4.11 $</h5>
                           </div>
                         </div>
@@ -190,7 +193,7 @@ function Shop(props) {
                           <img src="img/featur-2.jpg" className="img-fluid rounded" alt />
                         </div>
                         <div>
-                          <h6 className="mb-2">Big Banana</h6>
+                          <h4 className="mb-2">Big Banana</h4>
                           <div className="d-flex mb-2">
                             <i className="fa fa-star text-secondary" />
                             <i className="fa fa-star text-secondary" />
@@ -199,7 +202,7 @@ function Shop(props) {
                             <i className="fa fa-star" />
                           </div>
                           <div className="d-flex mb-2">
-                            <h5 className="fw-bold me-2">2.99 $</h5>
+                            <h4 className="fw-bold me-2">2.99 $</h4>
                             <h5 className="text-danger text-decoration-line-through">4.11 $</h5>
                           </div>
                         </div>
@@ -209,7 +212,7 @@ function Shop(props) {
                           <img src="img/featur-3.jpg" className="img-fluid rounded" alt />
                         </div>
                         <div>
-                          <h6 className="mb-2">Big Banana</h6>
+                          <h4 className="mb-2">Big Banana</h4>
                           <div className="d-flex mb-2">
                             <i className="fa fa-star text-secondary" />
                             <i className="fa fa-star text-secondary" />
@@ -218,7 +221,7 @@ function Shop(props) {
                             <i className="fa fa-star" />
                           </div>
                           <div className="d-flex mb-2">
-                            <h5 className="fw-bold me-2">2.99 $</h5>
+                            <h4 className="fw-bold me-2">2.99 $</h4>
                             <h5 className="text-danger text-decoration-line-through">4.11 $</h5>
                           </div>
                         </div>

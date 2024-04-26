@@ -36,13 +36,11 @@ function Header(props) {
               <a href="#" className="text-white"><small className="text-white mx-2">Terms of Use</small>/</a>
               <a href="#" className="text-white"><small className="text-white ms-2">Sales and Refunds</small></a>
             </div>
-            {
-              themeContext.theme === 'light' ? <LightModeIcon onClick={handleTheme} /> :  <DarkModeIcon  onClick={handleTheme} />
-            }
+
           </div>
         </div>
         <div className="container px-0">
-          <nav className="navbar navbar-light  navbar-expand-xl">
+          <nav className="navbar navbar-expand-xl">
             <a href="index.html" className="navbar-brand"><h1 className="text-primary display-6">Fruitables</h1></a>
             <button className="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
               <span className="fa fa-bars text-primary" />
@@ -78,7 +76,12 @@ function Header(props) {
                 <a href="#" className="my-auto">
                   <i className="fas fa-user fa-2x" />
                 </a>
+
+
               </div>
+              {
+                themeContext.theme === 'light' ? <LightModeIcon onClick={handleTheme} /> : <DarkModeIcon onClick={handleTheme} />
+              }
             </div>
           </nav>
         </div>

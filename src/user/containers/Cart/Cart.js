@@ -236,13 +236,13 @@ function Cart(props) {
                                 <div className="p-4">
                                     <h1 className="display-6 mb-4">Cart <span className="fw-normal">Total</span></h1>
                                     <div className="d-flex justify-content-between mb-4">
-                                        <h5 className="mb-0 me-4">Subtotal:</h5>
+                                        <h4 className="mb-0 me-4">Subtotal:</h4>
                                         <p className="mb-0">${totalAmt.toFixed(2)}</p>
                                     </div>
                                     {
                                         DiscountAmt > 0 ?
                                             <div className="d-flex justify-content-between mb-4">
-                                                <h5 className="mb-0 me-4">Discount:</h5>
+                                                <h4 className="mb-0 me-4">Discount:</h4>
                                                 <p className="mb-0">${DiscountAmt.toFixed(2)}</p>
                                             </div> : ''
                                     }
@@ -250,7 +250,7 @@ function Cart(props) {
                                         TotalBill < 500 ?
                                             <>
                                                 <div className="d-flex justify-content-between">
-                                                    <h5 className="mb-0 me-4">Shipping</h5>
+                                                    <h4 className="mb-0 me-4">Shipping</h4>
                                                     <div className>
                                                         <p className="mb-0">Flat rate: ${100}</p>
                                                     </div>
@@ -262,7 +262,7 @@ function Cart(props) {
 
                                 </div>
                                 <div className="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                                    <h5 className="mb-0 ps-4 me-4">Total</h5>
+                                    <h4 className="mb-0 ps-4 me-4">Total</h4>
                                     <p className="mb-0 pe-4">${TotalBill < 500 ? TotalBill + 100 : TotalBill}</p>
                                 </div>
 
