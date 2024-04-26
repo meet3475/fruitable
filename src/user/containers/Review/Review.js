@@ -26,7 +26,7 @@ function Review(props) {
     const [update, setUpdate] = useState(false)
 
 
-    const reviewsVal = useSelector(state => state.reviews)
+    const reviews = useSelector(state => state.reviews)
 
   
     let shopDetailSchema = object({
@@ -156,7 +156,7 @@ function Review(props) {
                         <div className='row'>
                             <div style={{ height: 400, width: '100%' }}>
                                 <DataGrid
-                                    rows={reviewsVal.reviews}
+                                    rows={reviews.reviews}
                                     columns={columns}
                                     initialState={{
                                         pagination: {
