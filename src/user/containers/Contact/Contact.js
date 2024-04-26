@@ -59,7 +59,7 @@ function Contact(props) {
             {/* Contact Start */}
             <div className="container-fluid contact py-5">
                 <div className="container py-5">
-                    <div className="p-5 bg-light rounded">
+                    <div className="p-5  rounded">
                         <div className="row g-4">
                             <div className="col-12">
                                 <div className="text-center mx-auto" style={{ maxWidth: 700 }}>

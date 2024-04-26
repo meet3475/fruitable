@@ -47,7 +47,7 @@ function Header(props) {
             <button className="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
               <span className="fa fa-bars text-primary" />
             </button>
-            <div className="collapse navbar-collapse " id="navbarCollapse">
+            <div className="collapse navbar-collapse" id="navbarCollapse">
               <div className="navbar-nav mx-auto">
                 <NavLink to='/' className="nav-item nav-link active">Home</NavLink>
                 <NavLink to='/Shop' className="nav-item nav-link">Shop</NavLink>

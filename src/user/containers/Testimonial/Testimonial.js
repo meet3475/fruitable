@@ -75,7 +75,7 @@ function Testimonial(props) {
                         <h1 className="display-5 mb-5 text-dark">Our Client Saying!</h1>
                     </div>
                     <OwlCarousel {...testimonial_carousel} className="owl-carousel testimonial-carousel">
-                        <div className="testimonial-item img-border-radius bg-light rounded p-4">
+                        <div className="testimonial-item img-border-radius  rounded p-4">
                             <div className="position-relative">
                                 <i className="fa fa-quote-right fa-2x text-secondary position-absolute" style={{ bottom: 30, right: 0 }} />
                                 <div className="mb-4 pb-4 border-bottom border-secondary">
@@ -100,7 +100,7 @@ function Testimonial(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="testimonial-item img-border-radius bg-light rounded p-4">
+                        <div className="testimonial-item img-border-radius  rounded p-4">
                             <div className="position-relative">
                                 <i className="fa fa-quote-right fa-2x text-secondary position-absolute" style={{ bottom: 30, right: 0 }} />
                                 <div className="mb-4 pb-4 border-bottom border-secondary">
@@ -125,7 +125,7 @@ function Testimonial(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="testimonial-item img-border-radius bg-light rounded p-4">
+                        <div className="testimonial-item img-border-radius rounded p-4">
                             <div className="position-relative">
                                 <i className="fa fa-quote-right fa-2x text-secondary position-absolute" style={{ bottom: 30, right: 0 }} />
                                 <div className="mb-4 pb-4 border-bottom border-secondary">
