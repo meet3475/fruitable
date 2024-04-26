@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import { ThemeContext } from '../../../Context/ThemeContext';
 
 function Testimonial(props) {
+
+    const theme = useContext(ThemeContext)
 
     let testimonial_carousel = {
         autoplay: true,
@@ -72,7 +75,7 @@ function Testimonial(props) {
                 <div className="container py-5">
                     <div className="testimonial-header text-center">
                         <h4 className="text-primary">Our Testimonial</h4>
-                        <h1 className="display-5 mb-5 text-dark">Our Client Saying!</h1>
+                        <h2 className={`display-5 mb-5 text-dark ${theme.theme}`}>Our Client Saying!</h2>
                     </div>
                     <OwlCarousel {...testimonial_carousel} className="owl-carousel testimonial-carousel">
                         <div className="testimonial-item img-border-radius  rounded p-4">

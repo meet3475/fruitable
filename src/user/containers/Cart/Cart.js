@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProduct } from '../../../redux/action/product.action';
 import { deleteToCart, minusToCart, plusToCart } from '../../../redux/slice/cart.slice';
@@ -7,6 +7,7 @@ import { useFormik } from 'formik';
 
 import { object, string } from 'yup';
 import { getCoupon } from '../../../redux/slice/coupon.slice';
+import { ThemeContext } from '../../../Context/ThemeContext';
 
 
 function Cart(props) {
@@ -120,6 +121,7 @@ function Cart(props) {
 
     const { handleSubmit, handleChange, handleBlur, values, touched, errors } = formik;
 
+    const theme = useContext(ThemeContext)
 
     return (
         <div>
@@ -232,9 +234,9 @@ function Cart(props) {
                     <div className="row g-4 justify-content-end">
                         <div className="col-8" />
                         <div className="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                            <div className=" rounded">
+                            <div className="rounded">
                                 <div className="p-4">
-                                    <h1 className="display-6 mb-4">Cart <span className="fw-normal">Total</span></h1>
+                                    <h2 className={`display-6 mb-4 ${theme.theme}`}>Cart <span className="fw-normal">Total</span></h2>
                                     <div className="d-flex justify-content-between mb-4">
                                         <h4 className="mb-0 me-4">Subtotal:</h4>
                                         <p className="mb-0">${totalAmt.toFixed(2)}</p>

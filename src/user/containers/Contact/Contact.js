@@ -118,22 +118,22 @@ function Contact(props) {
                                 <div className="d-flex p-4 rounded mb-4 bg-white">
                                     <i className="fas fa-map-marker-alt fa-2x text-primary me-4" />
                                     <div>
-                                        <h4>Address</h4>
-                                        <p className="mb-2">123 Street New York.USA</p>
+                                        <h5>Address</h5>
+                                        <h6 className="mb-2">123 Street New York.USA</h6>
                                     </div>
                                 </div>
                                 <div className="d-flex p-4 rounded mb-4 bg-white">
                                     <i className="fas fa-envelope fa-2x text-primary me-4" />
                                     <div>
-                                        <h4>Mail Us</h4>
-                                        <p className="mb-2">info@example.com</p>
+                                        <h5>Mail Us</h5>
+                                        <h6 className="mb-2">info@example.com</h6>
                                     </div>
                                 </div>
                                 <div className="d-flex p-4 rounded bg-white">
                                     <i className="fa fa-phone-alt fa-2x text-primary me-4" />
                                     <div>
-                                        <h4>Telephone</h4>
-                                        <p className="mb-2">(+012) 3456 7890</p>
+                                        <h5>Telephone</h5>
+                                        <h6 className="mb-2">(+012) 3456 7890</h6>
                                     </div>
                                 </div>
                             </div>

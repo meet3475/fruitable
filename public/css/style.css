@@ -534,6 +534,10 @@
     
 }
 
+.rounded {
+    border:  1px solid;
+}
+
 .dark h4 {
     color: white !important;
 }
@@ -544,4 +548,8 @@
 
 .dark th {
     color: white !important;
+}
+
+.dark td {
+    color: white !important;   
 }

@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../../../Context/ThemeContext';
 
 function Chackout(props) {
+    const theme = useContext(ThemeContext)
+
     return (
         <div>
             {/* Modal Search Start */}
@@ -34,7 +37,7 @@ function Chackout(props) {
             {/* Checkout Page Start */}
             <div className="container-fluid py-5">
                 <div className="container py-5">
-                    <h1 className="mb-4">Billing details</h1>
+                    <h2 className={`mb-4 ${theme.theme}`}>Billing details</h2>
                     <form action="#">
                         <div className="row g-5">
                             <div className="col-md-12 col-lg-6 col-xl-7">

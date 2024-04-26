@@ -171,7 +171,7 @@ function ShopDetail(props) {
                 <div className="col-lg-6">
                   <h4 className="fw-bold mb-3">{fruits.name}</h4>
                   <p className="mb-3">Category: Vegetables</p>
-                  <h5 className="fw-bold mb-3">${fruits.price}</h5>
+                  <h4 className="fw-bold mb-3">${fruits.price}</h4>
                   <div className="d-flex mb-4">
                     <i className="fa fa-star text-secondary" />
                     <i className="fa fa-star text-secondary" />
