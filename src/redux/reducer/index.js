@@ -18,4 +18,6 @@ export const RootReducer = combineReducers({
     counter_slice : counterSlice,
     cart: cartSlice,
     coupon: couponSlice,
+    
+
 })

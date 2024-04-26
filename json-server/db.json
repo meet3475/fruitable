@@ -137,14 +137,6 @@
   ],
   "reviews": [
     {
-      "id": "sd123",
-      "pid": 2,
-      "name": "Shyam",
-      "email": "syam12@gamil.com",
-      "review": "Good Product",
-      "rating": 5
-    },
-    {
       "id": "7e2a",
       "name": "Dobariya ",
       "email": "meetdobariya480@gmail.com",
@@ -184,12 +176,6 @@
       "id": "b33e",
       "name": "Dobariya Meet",
       "email": "vraj21@gamail.com",
-      "review": "best"
-    },
-    {
-      "id": "c88d",
-      "name": "Dobariya Meet",
-      "email": "meetdobariya480@gmail.com",
       "review": "best"
     }
   ],
