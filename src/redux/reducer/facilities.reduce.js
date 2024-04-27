@@ -56,4 +56,3 @@ export const facilitiesReducer = (state = initialState, action) => {
             return state
     }
 }
-
