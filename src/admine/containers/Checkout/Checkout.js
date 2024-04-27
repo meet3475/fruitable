@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -9,16 +9,14 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { object, string, number, date, InferType } from 'yup';
 
-import { useDispatch, useSelector } from 'react-redux';
-
 import { useFormik } from 'formik';
-
 
 import { DataGrid } from '@mui/x-data-grid';
 
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { CheckoutContext } from '../../../Context/CheckoutContext';
 
 
 
@@ -28,9 +26,7 @@ function Chechout(props) {
 
     const [update, setUpdate] = useState(false);
 
-    const dispatch = useDispatch()
-
-
+    const checkout = useContext(CheckoutContext)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -42,10 +38,6 @@ function Chechout(props) {
         setUpdate(false);
     };
 
-
-    useEffect(() => {
-        
-    }, []);
 
 
     let checkoutSchema = object({
@@ -67,9 +59,9 @@ function Chechout(props) {
 
         onSubmit: (values, { resetForm }) => {
             if (update) {
-
+                checkout.editcheckout(values)
             } else {
-
+                checkout.addcheckout(values)
             }
             resetForm();
             handleClose();
@@ -82,6 +74,7 @@ function Chechout(props) {
 
     const handleDelete = (id) => {
         console.log(id);
+        checkout.deletecheckout(id)
       
     }
 
@@ -91,28 +84,28 @@ function Chechout(props) {
         setUpdate(true);
     }
 
-    // const columns = [
-    //     { field: 'name', headerName: 'Name', width: 170 },
-    //     { field: 'adress', headerName: 'Adress', width: 170 },
-    //     { field: 'moblie', headerName: 'Moblie', width: 170 },
-    //     {
-    //         field: 'Action',
-    //         headerName: 'Action',
-    //         width: 130,
-    //         renderCell: (params) => (
-    //             <>
-    //                 <IconButton aria-label="edit" size="large" onClick={() => handleEdit(params.row)}>
-    //                     <EditIcon />
-    //                 </IconButton>
+    const columns = [
+        { field: 'name', headerName: 'Name', width: 170 },
+        { field: 'adress', headerName: 'Adress', width: 170 },
+        { field: 'moblie', headerName: 'Moblie', width: 170 },
+        {
+            field: 'Action',
+            headerName: 'Action',
+            width: 130,
+            renderCell: (params) => (
+                <>
+                    <IconButton aria-label="edit" size="large" onClick={() => handleEdit(params.row)}>
+                        <EditIcon />
+                    </IconButton>
 
-    //                 <IconButton aria-label="delete" size="large" onClick={() => handleDelete(params.row.id)}>
-    //                     <DeleteIcon />
-    //                 </IconButton>
-    //             </>
-    //         )
-    //     }
+                    <IconButton aria-label="delete" size="large" onClick={() => handleDelete(params.row.id)}>
+                        <DeleteIcon />
+                    </IconButton>
+                </>
+            )
+        }
 
-    // ];
+    ];
 
 
     return (
@@ -179,9 +172,9 @@ function Chechout(props) {
 
             </Dialog>
 
-            {/* <div style={{ height: 400, width: '100%' }}>
+            <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    // rows={coupon.coupon}
+                    rows={checkout.checkout}
                     columns={columns}
                     initialState={{
                         pagination: {
@@ -191,7 +184,7 @@ function Chechout(props) {
                     pageSizeOptions={[5, 10]}
                     checkboxSelection
                 />
-            </div> */}
+            </div>
 
         </>
     );

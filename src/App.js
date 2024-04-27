@@ -7,6 +7,7 @@ import { storeReduce } from "./redux/store";
 import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from "./Context/ThemeContext";
 import Chechout from "./admine/containers/Checkout/Checkout";
+import { CheckProvider } from "./Context/CheckoutContext";
 
 
 

@@ -1,6 +1,8 @@
 import { createContext, useReducer } from "react";
 import { ADD_CHECKOUT, DELETE_CHECKOUT, GET_CHECKOUT, UPDATE_CHECKOUT } from "./ActionType";
 import { checkoutReducer } from "./reducer/checkout.reducer";
+import axios from "axios";
+import { baseURL } from "../utils/baseURL";
 
 const initialState = {
     isLoading: false,
