@@ -29,10 +29,6 @@ const cartSlice = createSlice({
             const index = state.cart.findIndex((v) => v.Pid === action.payload);
 
             state.cart[index].qty++
-
-
-
-    
         },
         minusToCart: (state, action) => {
 
