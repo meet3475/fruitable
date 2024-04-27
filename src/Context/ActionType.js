@@ -1,2 +1,7 @@
 
 export const TOGGLE_THEME = "TOGGLE_THEME"
+
+export const ADD_CHECKOUT = "ADD_CHECKOUT"
+export const DELETE_CHECKOUT = "DELETE_CHECKOUT"
+export const UPDATE_CHECKOUT = "UPDATE_CHECKOUT"
+export const GET_CHECKOUT = "GET_CHECKOUT"

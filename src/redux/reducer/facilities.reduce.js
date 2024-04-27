@@ -21,7 +21,10 @@ export const facilitiesReducer = (state = initialState, action) => {
 
         case GET_FCILITIES:
             return {
-                ...state
+                ...state,
+                isLoading: false,
+                facilities: action.payload,
+                error: null
             }
 
         case ADD_FCILITIES:
