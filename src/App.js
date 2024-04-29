@@ -8,6 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from "./Context/ThemeContext";
 import Chechout from "./admine/containers/Checkout/Checkout";
 import { CheckProvider } from "./Context/CheckoutContext";
+import { ContactProvider } from "./Context/ContactContext";
 
 
 
@@ -15,6 +16,7 @@ function App() {
   const {store, persistor} = storeReduce();
 
   return (
+    <ContactProvider>
     <CheckProvider>
     <ThemeProvider>
     <Provider store={store}>
@@ -29,6 +31,7 @@ function App() {
     </Provider>
     </ThemeProvider>
     </CheckProvider>
+    </ContactProvider>
   );
 }
 

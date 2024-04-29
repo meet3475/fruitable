@@ -8,6 +8,7 @@ import Facilities from '../../admine/containers/Facilities/Facilities';
 import Counter from '../../admine/containers/Counter/Counter';
 import Coupon from '../../admine/containers/Coupon/Coupon';
 import Checkout from '../../admine/containers/Checkout/Checkout';
+import Contact from '../../admine/containers/Contact/Contact';
 
 
 function AdmineRoute(props) {
@@ -22,6 +23,7 @@ function AdmineRoute(props) {
                     <Route exact path="/counter" element={<Counter />} />
                     <Route exact path="/coupon" element={<Coupon />} />
                     <Route exact path="/checkout" element={<Checkout />} />
+                    <Route exact path="/contact" element={<Contact/>} />
                 </Routes>
             </Layout>
         </div>

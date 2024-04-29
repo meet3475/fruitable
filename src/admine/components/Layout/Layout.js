@@ -25,6 +25,7 @@ import { NavLink } from 'react-router-dom';
 import DnsIcon from '@mui/icons-material/Dns';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import DiscountIcon from '@mui/icons-material/Discount';
+import ContactsIcon from '@mui/icons-material/Contacts';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 
 const drawerWidth = 240;
@@ -101,6 +102,7 @@ let adminlink = [
   { title: "Product", icon: <AppleIcon />, to: "/admine/product" },
   { title: "Review", icon: <RateReviewIcon />, to: "/admine/review" },
   { title: "Coupon", icon: <DiscountIcon  />, to: "/admine/coupon" },
+  { title: "Contact", icon: <ContactsIcon  />, to: "/admine/contact" },
   { title: "Checkout", icon: <FactCheckIcon  />, to: "/admine/checkout" },
   
 ]
