@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import { object, string } from 'yup';
 import { getCoupon } from '../../../redux/slice/coupon.slice';
 import { ThemeContext } from '../../../Context/ThemeContext';
+import Button from '../../components/UI/Button/Button';
 
 
 function Cart(props) {
@@ -268,7 +269,7 @@ function Cart(props) {
                                     <p className="mb-0 pe-4">${TotalBill < 500 ? TotalBill + 100 : TotalBill}</p>
                                 </div>
 
-                                <button className="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                                <Button>Proceed Checkout</Button>
                             </div>
                         </div>
                     </div>

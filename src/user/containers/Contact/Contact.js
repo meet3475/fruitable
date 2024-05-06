@@ -1,6 +1,7 @@
 import React from 'react';
 import { object, string, number, date, InferType } from 'yup';
 import { useFormik } from 'formik';
+import Input from '../../components/UI/Input/Input';
 
 
 function Contact(props) {
@@ -74,18 +75,15 @@ function Contact(props) {
                             </div>
                             <div className="col-lg-7">
                                 <form onSubmit={handleSubmit}>
-                                    <input
+                                    <Input
                                         type="text"
-                                        className="w-100 form-control border-0 py-3 mb-4"
                                         placeholder="Your Name"
                                         name='name'
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.name}
+                                        errorText= {errors.name && touched.name ? errors.name : ''}
                                     />
-                                    <span className='error'>
-                                        {errors.name && touched.name ? errors.name : ''}
-                                    </span>
                                     <input
                                         type="email"
                                         className="w-100 form-control border-0 py-3 mb-4"
