@@ -225,11 +225,12 @@ function Cart(props) {
                                 value={values.coupon}
                             />
                             {errors.coupon && touched.coupon ? <span style={{ color: "red", margin: "20px" }} >{errors.coupon}</span> : null}
-                            <button
+                            <Button
+                                btnDisable={true}
                                 className="btn border-secondary rounded-pill px-4 py-3 text-primary"
                                 type="submit">
                                 Apply Coupon
-                            </button>
+                            </Button>
                         </form>
                     </div>
                     <div className="row g-4 justify-content-end">
@@ -269,7 +270,9 @@ function Cart(props) {
                                     <p className="mb-0 pe-4">${TotalBill < 500 ? TotalBill + 100 : TotalBill}</p>
                                 </div>
 
-                                <Button>Proceed Checkout</Button>
+                                <Button btnType="Primary">
+                                    Proceed Checkout
+                                </Button>
                             </div>
                         </div>
                     </div>
