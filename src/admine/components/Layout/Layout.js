@@ -97,6 +97,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 let adminlink = [
   { title: "Catagory", icon: < CategoryIcon />, to: "/admine/catagory" },
+  { title: "Subcatagory", icon: <FactCheckIcon  />, to: "/admine/subcatagory" },
   { title: "Facilities", icon: <DnsIcon />, to: "/admine/facilities" },
   { title: "Counter", icon: <CalculateIcon />, to: "/admine/counter" },
   { title: "Product", icon: <AppleIcon />, to: "/admine/product" },

@@ -20,10 +20,11 @@ import EditIcon from '@mui/icons-material/Edit';
 
 
 
-export default function Catagory() {
+export default function Subcatagory() {
     const [open, setOpen] = React.useState(false);
     const [data, setData] = React.useState([]);
     const [update, setUpdate] = React.useState(null);
+    const [category, setCategory] = React.useState([]);
 
     // console.log(data);
     const handleClickOpen = () => {
@@ -38,13 +39,13 @@ export default function Catagory() {
 
     let catagorySchema = object({
         name: string().required("Please entre name"),
-        discription: string().required("Please entre discription").min(5, "Please entre minimum 5 charactrer in message"),
+        description: string().required("Please entre discription").min(5, "Please entre minimum 5 charactrer in message"),
     });
 
     const formik = useFormik({
         initialValues: {
             name: '',
-            discription: '',
+            description: '',
         },
 
         validationSchema: catagorySchema,
@@ -68,18 +69,19 @@ export default function Catagory() {
 
     const getData = async () => {
         try {
-            const response = await fetch("http://localhost:8000/api/v1/categories/list-categories");
+            const response = await fetch("http://localhost:8000/api/v1/subcategories/list-subcategories");
             const data = await response.json();
             console.log(data);
             setData(data.data);
+
+            const response2 = await fetch("http://localhost:8000/api/v1/categories/list-categories");
+            const catagories = await response2.json();
+            console.log(catagories);
+            setCategory(catagories.data);
         } catch (error) {
             console.log(error);
         }
-        // const localData = JSON.parse(localStorage.getItem("category"));
 
-        // if (localData) {
-        //     setData(localData)
-        // }
     }
 
     React.useEffect(() => {
@@ -88,10 +90,10 @@ export default function Catagory() {
 
 
     const handleAdd = async (data) => {
-         console.log(data);
+        console.log(data);
 
         try {
-            await fetch("http://localhost:8000/api/v1/categories/add-categories", {
+            await fetch("http://localhost:8000/api/v1/subcategories/add-subcategories", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -102,15 +104,6 @@ export default function Catagory() {
             console.log(error);
         }
 
-        // let localData = JSON.parse(localStorage.getItem("category"));
-        // let rNo = Math.floor(Math.random() * 1000);
-
-        // if (localData) {
-        //     localData.push({ ...data, id: rNo });
-        //     localStorage.setItem("category", JSON.stringify(localData));
-        // } else {
-        //     localStorage.setItem("category", JSON.stringify([{ ...data, id: rNo }]));
-        // }
         getData();
     }
 
@@ -118,18 +111,12 @@ export default function Catagory() {
     const handleDelete = async (data) => {
 
         try {
-            await fetch("http://localhost:8000/api/v1/categories/delete-category/" + data._id, {
+            await fetch("http://localhost:8000/api/v1/subcategories/delete-subcategory/" + data._id, {
                 method: "DELETE",
             })
         } catch (error) {
             console.log(error);
         }
-
-        // let localData = JSON.parse(localStorage.getItem("category"));
-
-        // let fData = localData.filter((v) => v.id !== data.id);
-
-        // localStorage.setItem("category", JSON.stringify(fData));
 
         getData();
     }
@@ -144,7 +131,7 @@ export default function Catagory() {
     const handleUpdateData = async (data) => {
 
         try {
-            await fetch("http://localhost:8000/api/v1/categories/update-category/" + data._id, {
+            await fetch("http://localhost:8000/api/v1/subcategories/update-subcategory/" + data._id, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -155,21 +142,12 @@ export default function Catagory() {
             console.log(error);
         }
 
-
-        // let localData = JSON.parse(localStorage.getItem("category"));
-
-        // let index = localData.findIndex((v) => v.id === data.id);
-
-        // localData[index] = data;
-
-        // localStorage.setItem("category", JSON.stringify(localData));
-
         getData();
     }
 
     const columns = [
         { field: 'name', headerName: 'Name', width: 130 },
-        { field: 'discription', headerName: 'Description', width: 130 },
+        { field: 'description', headerName: 'Description', width: 130 },
         {
             field: 'Action',
             headerName: 'Action',
@@ -194,23 +172,34 @@ export default function Catagory() {
 
 
     return (
+
         <>
+
             <React.Fragment>
                 <Button variant="outlined" onClick={handleClickOpen}>
-                    Add Category
+                    Add Subcategory
                 </Button>
                 <Dialog
                     open={open}
                     onClose={handleClose}
                 >
-                    <DialogTitle>Category</DialogTitle>
+                    <DialogTitle>Subcategory</DialogTitle>
                     <form onSubmit={handleSubmit}>
                         <DialogContent>
+                            <select name="" id="">
+                                <option value="">Select Category</option>
+                                {
+                                    category.map((v) => (
+                                        console.log(v._id),
+                                        <option value={v._id}>{v.name}</option>
+                                    ))
+                                }
+                            </select>
                             <TextField
                                 margin="dense"
                                 id="name"
                                 name="name"
-                                label="Category Name"
+                                label="Subcategory Name"
                                 type="text"
                                 fullWidth
                                 variant="standard"
@@ -223,16 +212,16 @@ export default function Catagory() {
                             <TextField
                                 margin="dense"
                                 id="name"
-                                name="discription"
-                                label="Category Description"
+                                name="description"
+                                label="Subcategory Description"
                                 type="text"
                                 fullWidth
                                 variant="standard"
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                value={values.discription}
-                                error={errors.discription && touched.discription ? true : false}
-                                helperText={errors.discription && touched.discription ? errors.discription : ''}
+                                value={values.description}
+                                error={errors.description && touched.description ? true : false}
+                                helperText={errors.description && touched.description ? errors.description : ''}
                             />
                             <DialogActions>
                                 <Button onClick={handleClose}>Cancel</Button>
