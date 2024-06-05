@@ -40,12 +40,15 @@ export default function Subcatagory() {
     let catagorySchema = object({
         name: string().required("Please entre name"),
         description: string().required("Please entre discription").min(5, "Please entre minimum 5 charactrer in message"),
+        category_id: string().required("Please select category")
     });
 
     const formik = useFormik({
         initialValues: {
+            category_id:'',
             name: '',
             description: '',
+            
         },
 
         validationSchema: catagorySchema,
@@ -90,6 +93,7 @@ export default function Subcatagory() {
 
 
     const handleAdd = async (data) => {
+        data.category = values.category;  // Include the selected category's ID
         console.log(data);
 
         try {
@@ -186,15 +190,22 @@ export default function Subcatagory() {
                     <DialogTitle>Subcategory</DialogTitle>
                     <form onSubmit={handleSubmit}>
                         <DialogContent>
-                            <select name="" id="">
+                            <select
+                                name="category_id"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.category_id}
+                            >
                                 <option value="">Select Category</option>
                                 {
                                     category.map((v) => (
-                                        console.log(v._id),
                                         <option value={v._id}>{v.name}</option>
                                     ))
                                 }
+
                             </select>
+                            {errors.category_id && touched.category_id ? <span style={{ color: "red" }}>{errors.category_id}</span> : null}
+                            
                             <TextField
                                 margin="dense"
                                 id="name"
