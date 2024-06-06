@@ -15,6 +15,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { InputLabel, MenuItem, Select } from '@mui/material';
 
 
 
@@ -45,10 +46,10 @@ export default function Subcatagory() {
 
     const formik = useFormik({
         initialValues: {
-            category_id:'',
+            category_id: '',
             name: '',
             description: '',
-            
+
         },
 
         validationSchema: catagorySchema,
@@ -69,14 +70,8 @@ export default function Subcatagory() {
 
     const { handleSubmit, handleChange, handleBlur, errors, touched, values, setValues } = formik;
 
-
-    const getData = async () => {
+    const getCategoryData = async () => {
         try {
-            const response = await fetch("http://localhost:8000/api/v1/subcategories/list-subcategories");
-            const data = await response.json();
-            console.log(data);
-            setData(data.data);
-
             const response2 = await fetch("http://localhost:8000/api/v1/categories/list-categories");
             const catagories = await response2.json();
             console.log(catagories);
@@ -87,14 +82,26 @@ export default function Subcatagory() {
 
     }
 
+    const getData = async () => {
+        try {
+            const response = await fetch("http://localhost:8000/api/v1/subcategories/list-subcategories");
+            const data = await response.json();
+            console.log(data);
+            setData(data.data);
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
     React.useEffect(() => {
+        getCategoryData();
         getData();
     }, [])
 
 
     const handleAdd = async (data) => {
-        data.category = values.category;  // Include the selected category's ID
-        console.log(data);
 
         try {
             await fetch("http://localhost:8000/api/v1/subcategories/add-subcategories", {
@@ -150,6 +157,13 @@ export default function Subcatagory() {
     }
 
     const columns = [
+        {
+            field: 'category_id', headerName: 'Category', width: 150,
+            renderCell: (params) => {
+                const categories = category.find((v) => v._id === params.row.category_id);
+                return  categories ?  categories.name : ''
+            }
+        },
         { field: 'name', headerName: 'Name', width: 130 },
         { field: 'description', headerName: 'Description', width: 130 },
         {
@@ -190,22 +204,23 @@ export default function Subcatagory() {
                     <DialogTitle>Subcategory</DialogTitle>
                     <form onSubmit={handleSubmit}>
                         <DialogContent>
-                            <select
+                            <InputLabel style={{ color: "black" }}>Select Category</InputLabel>
+                            <Select
                                 name="category_id"
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 value={values.category_id}
+                                label="Select Category"
                             >
-                                <option value="">Select Category</option>
                                 {
                                     category.map((v) => (
-                                        <option value={v._id}>{v.name}</option>
+                                        <MenuItem value={v._id}>{v.name}</MenuItem>
                                     ))
                                 }
 
-                            </select>
+                            </Select>
                             {errors.category_id && touched.category_id ? <span style={{ color: "red" }}>{errors.category_id}</span> : null}
-                            
+
                             <TextField
                                 margin="dense"
                                 id="name"

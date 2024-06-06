@@ -32,3 +32,11 @@ export const LOADING_REVIEW = "LOADINGE_REVIEW"
 export const ERROR_REVIEW = "ERROR_REVIEW"
 
 export const GET_CART = "GET_CART"
+
+export const GET_CATEGORY = "GET_CATEGORY"
+export const ADD_CATEGORY = "ADD_CATEGORY"
+export const DELETE_CATEGORY = "DELETE_CATEGORY"
+export const UPDATE_CATEGORY = "UPDATE_CATEGORY"
+
+
+
