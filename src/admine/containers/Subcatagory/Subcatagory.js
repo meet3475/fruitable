@@ -16,9 +16,9 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { InputLabel, MenuItem, Select } from '@mui/material';
-
-
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getSubData, handleAdd, handleUpdateData, handledelete } from '../../../redux/slice/subcategory.slice';
+import { getData } from '../../../redux/action/category.action';
 
 
 export default function Subcatagory() {
@@ -27,6 +27,12 @@ export default function Subcatagory() {
     const [update, setUpdate] = React.useState(null);
     const [category, setCategory] = React.useState([]);
 
+    const dispatch = useDispatch();
+    const subcategories = useSelector(state => state.subcategories);
+    // console.log(subcategories.subcategories);
+
+   const categories = useSelector(state => state.categories);
+    // console.log(categories.categories);
     // console.log(data);
     const handleClickOpen = () => {
         setOpen(true);
@@ -38,7 +44,7 @@ export default function Subcatagory() {
         setUpdate(null);
     };
 
-    let catagorySchema = object({
+    let subcatagorySchema = object({
         name: string().required("Please entre name"),
         description: string().required("Please entre discription").min(5, "Please entre minimum 5 charactrer in message"),
         category_id: string().required("Please select category")
@@ -52,14 +58,14 @@ export default function Subcatagory() {
 
         },
 
-        validationSchema: catagorySchema,
+        validationSchema: subcatagorySchema,
 
         onSubmit: (values, { resetForm }) => {
 
             if (update) {
-                handleUpdateData(values)
+                dispatch(handleUpdateData(values))
             } else {
-                handleAdd(values)
+                dispatch(handleAdd(values))
             }
 
             resetForm();
@@ -70,66 +76,71 @@ export default function Subcatagory() {
 
     const { handleSubmit, handleChange, handleBlur, errors, touched, values, setValues } = formik;
 
-    const getCategoryData = async () => {
-        try {
-            const response2 = await fetch("http://localhost:8000/api/v1/categories/list-categories");
-            const catagories = await response2.json();
-            console.log(catagories);
-            setCategory(catagories.data);
-        } catch (error) {
-            console.log(error);
-        }
+    // const getCategoryData = async () => {
+    //     try {
+    //         const response2 = await fetch("http://localhost:8000/api/v1/categories/list-categories");
+    //         const catagories = await response2.json();
+    //         console.log(catagories);
+    //         setCategory(catagories.data);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
 
-    }
+    // }
 
-    const getData = async () => {
-        try {
-            const response = await fetch("http://localhost:8000/api/v1/subcategories/list-subcategories");
-            const data = await response.json();
-            console.log(data);
-            setData(data.data);
+    // const getData = async () => {
+    //     try {
+    //         const response = await fetch("http://localhost:8000/api/v1/subcategories/list-subcategories");
+    //         const data = await response.json();
+    //         console.log(data);
+    //         setData(data.data);
 
-        } catch (error) {
-            console.log(error);
-        }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
 
-    }
+    // }
 
     React.useEffect(() => {
-        getCategoryData();
-        getData();
+        dispatch(getData());
+        dispatch(getSubData());
     }, [])
 
 
-    const handleAdd = async (data) => {
+    // const handleAdd = async (data) => {
 
-        try {
-            await fetch("http://localhost:8000/api/v1/subcategories/add-subcategories", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data)
-            })
-        } catch (error) {
-            console.log(error);
-        }
+    //     try {
+    //         await fetch("http://localhost:8000/api/v1/subcategories/add-subcategories", {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(data)
+    //         })
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
 
-        getData();
-    }
+    //     getData();
+    // }
 
 
-    const handleDelete = async (data) => {
+    // const handleDelete = async (data) => {
 
-        try {
-            await fetch("http://localhost:8000/api/v1/subcategories/delete-subcategory/" + data._id, {
-                method: "DELETE",
-            })
-        } catch (error) {
-            console.log(error);
-        }
+    //     try {
+    //         await fetch("http://localhost:8000/api/v1/subcategories/delete-subcategory/" + data._id, {
+    //             method: "DELETE",
+    //         })
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
 
-        getData();
+    //     getData();
+    // }
+
+    const handleDelete = (data) => {
+        console.log("gh");
+        dispatch(handledelete(data))
     }
 
     const handlEdit = (data) => {
@@ -139,29 +150,30 @@ export default function Subcatagory() {
         setUpdate(data._id);
     }
 
-    const handleUpdateData = async (data) => {
+    // const handleUpdateData = async (data) => {
 
-        try {
-            await fetch("http://localhost:8000/api/v1/subcategories/update-subcategory/" + data._id, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data)
-            })
-        } catch (error) {
-            console.log(error);
-        }
+    //     try {
+    //         await fetch("http://localhost:8000/api/v1/subcategories/update-subcategory/" + data._id, {
+    //             method: "PUT",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(data)
+    //         })
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
 
-        getData();
-    }
+    //     getData();
+    // }
 
     const columns = [
         {
             field: 'category_id', headerName: 'Category', width: 150,
             renderCell: (params) => {
-                const categories = category.find((v) => v._id === params.row.category_id);
-                return  categories ?  categories.name : ''
+                const category = categories.categories?.find((v) => v._id === params.row.category_id);
+                // console.log(category);
+                return category ? category.name : ''
             }
         },
         { field: 'name', headerName: 'Name', width: 130 },
@@ -176,7 +188,7 @@ export default function Subcatagory() {
                         <EditIcon />
                     </IconButton>
 
-                    <IconButton aria-label="delete" size="large" onClick={() => handleDelete(params.row)}>
+                    <IconButton aria-label="delete" size="large" onClick={() => handleDelete(params.row._id)}>
                         <DeleteIcon />
                     </IconButton>
                 </>
@@ -213,11 +225,11 @@ export default function Subcatagory() {
                                 label="Select Category"
                             >
                                 {
-                                    category.map((v) => (
-                                        <MenuItem value={v._id}>{v.name}</MenuItem>
+                                    categories.categories.map((v) => (
+                                        // console.log(v._id),
+                                        <MenuItem key={v._id} value={v._id}>{v.name}</MenuItem>
                                     ))
                                 }
-
                             </Select>
                             {errors.category_id && touched.category_id ? <span style={{ color: "red" }}>{errors.category_id}</span> : null}
 
@@ -264,7 +276,7 @@ export default function Subcatagory() {
 
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={data}
+                    rows={subcategories.subcategories}
                     columns={columns}
                     initialState={{
                         pagination: {

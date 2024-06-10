@@ -15,6 +15,8 @@ import { DataGrid } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { getData, handleAdd, handleUpdateData, handledelete } from '../../../redux/action/category.action';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
@@ -22,9 +24,12 @@ import EditIcon from '@mui/icons-material/Edit';
 
 export default function Catagory() {
     const [open, setOpen] = React.useState(false);
-    const [data, setData] = React.useState([]);
+    // const [data, setData] = React.useState([]);
     const [update, setUpdate] = React.useState(null);
 
+    const dispatch = useDispatch();
+    const categories = useSelector(state => state.categories);
+    console.log(categories.categories);
     // console.log(data);
     const handleClickOpen = () => {
         setOpen(true);
@@ -52,9 +57,9 @@ export default function Catagory() {
         onSubmit: (values, { resetForm }) => {
 
             if (update) {
-                handleUpdateData(values)
+                dispatch(handleUpdateData({...values, _id:update}));
             } else {
-                handleAdd(values)
+                dispatch(handleAdd(values));
             }
 
             resetForm();
@@ -65,73 +70,108 @@ export default function Catagory() {
 
     const { handleSubmit, handleChange, handleBlur, errors, touched, values, setValues } = formik;
 
-
-    const getData = async () => {
-        try {
-            const response = await fetch("http://localhost:8000/api/v1/categories/list-categories");
-            const data = await response.json();
-            console.log(data);
-            setData(data.data);
-        } catch (error) {
-            console.log(error);
-        }
-        // const localData = JSON.parse(localStorage.getItem("category"));
-
-        // if (localData) {
-        //     setData(localData)
-        // }
-    }
-
     React.useEffect(() => {
-        getData();
-    }, [])
+        dispatch(getData());
+    }, [dispatch])
 
 
-    const handleAdd = async (data) => {
-         console.log(data);
+    // const getData = async () => {
+    //     try {
+    //         const response = await fetch("http://localhost:8000/api/v1/categories/list-categories");
+    //         const data = await response.json();
+    //         console.log(data);
+    //         setData(data.data);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    //     // const localData = JSON.parse(localStorage.getItem("category"));
 
-        try {
-            await fetch("http://localhost:8000/api/v1/categories/add-categories", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data)
-            })
-        } catch (error) {
-            console.log(error);
-        }
-
-        // let localData = JSON.parse(localStorage.getItem("category"));
-        // let rNo = Math.floor(Math.random() * 1000);
-
-        // if (localData) {
-        //     localData.push({ ...data, id: rNo });
-        //     localStorage.setItem("category", JSON.stringify(localData));
-        // } else {
-        //     localStorage.setItem("category", JSON.stringify([{ ...data, id: rNo }]));
-        // }
-        getData();
-    }
+    //     // if (localData) {
+    //     //     setData(localData)
+    //     // }
+    // }
 
 
-    const handleDelete = async (data) => {
 
-        try {
-            await fetch("http://localhost:8000/api/v1/categories/delete-category/" + data._id, {
-                method: "DELETE",
-            })
-        } catch (error) {
-            console.log(error);
-        }
+    // const handleAdd = async (data) => {
+    //      console.log(data);
 
-        // let localData = JSON.parse(localStorage.getItem("category"));
+    //     try {
+    //         await fetch("http://localhost:8000/api/v1/categories/add-categories", {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(data)
+    //         })
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
 
-        // let fData = localData.filter((v) => v.id !== data.id);
+    //     // let localData = JSON.parse(localStorage.getItem("category"));
+    //     // let rNo = Math.floor(Math.random() * 1000);
 
-        // localStorage.setItem("category", JSON.stringify(fData));
+    //     // if (localData) {
+    //     //     localData.push({ ...data, id: rNo });
+    //     //     localStorage.setItem("category", JSON.stringify(localData));
+    //     // } else {
+    //     //     localStorage.setItem("category", JSON.stringify([{ ...data, id: rNo }]));
+    //     // }
+    //     getData();
+    // }
 
-        getData();
+
+    // const handleDelete = async (data) => {
+
+    //     try {
+    //         await fetch("http://localhost:8000/api/v1/categories/delete-category/" + data._id, {
+    //             method: "DELETE",
+    //         })
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+
+    //     // let localData = JSON.parse(localStorage.getItem("category"));
+
+    //     // let fData = localData.filter((v) => v.id !== data.id);
+
+    //     // localStorage.setItem("category", JSON.stringify(fData));
+
+    //     getData();
+    // }
+
+
+
+
+
+    // const handleUpdateData = async (data) => {
+
+    //     try {
+    //         await fetch("http://localhost:8000/api/v1/categories/update-category/" + data._id, {
+    //             method: "PUT",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(data)
+    //         })
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+
+
+    //     // let localData = JSON.parse(localStorage.getItem("category"));
+
+    //     // let index = localData.findIndex((v) => v.id === data.id);
+
+    //     // localData[index] = data;
+
+    //     // localStorage.setItem("category", JSON.stringify(localData));
+
+    //     getData();
+    // }
+
+    const handleDelete = (id) => {
+        dispatch(handledelete(id))
     }
 
     const handlEdit = (data) => {
@@ -139,32 +179,6 @@ export default function Catagory() {
         setOpen(true);
         setValues(data);
         setUpdate(data._id);
-    }
-
-    const handleUpdateData = async (data) => {
-
-        try {
-            await fetch("http://localhost:8000/api/v1/categories/update-category/" + data._id, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data)
-            })
-        } catch (error) {
-            console.log(error);
-        }
-
-
-        // let localData = JSON.parse(localStorage.getItem("category"));
-
-        // let index = localData.findIndex((v) => v.id === data.id);
-
-        // localData[index] = data;
-
-        // localStorage.setItem("category", JSON.stringify(localData));
-
-        getData();
     }
 
     const columns = [
@@ -180,7 +194,7 @@ export default function Catagory() {
                         <EditIcon />
                     </IconButton>
 
-                    <IconButton aria-label="delete" size="large" onClick={() => handleDelete(params.row)}>
+                    <IconButton aria-label="delete" size="large" onClick={() => handleDelete(params.row._id)}>
                         <DeleteIcon />
                     </IconButton>
                 </>
@@ -249,7 +263,7 @@ export default function Catagory() {
 
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={data}
+                    rows={categories.categories}
                     columns={columns}
                     initialState={{
                         pagination: {
