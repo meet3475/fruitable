@@ -28,9 +28,10 @@ export const productReducer = (state = initialState, action) => {
 
         case GET_PRODUCT:
             return {
+                ...state,
                 isLoading: false,
                 product: action.payload,
-                error: null
+                // error: null
             }
 
         case ADD_PRODUCT:
