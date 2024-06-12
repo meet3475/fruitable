@@ -1,5 +1,4 @@
 import axios from "axios"
-import { baseURL } from "../../utils/baseURL"
 import { ADD_PRODUCT, DELETE_PRODUCT, ERROR_PRODUCT, GET_PRODUCT, LOADING_PRODUCT, UPDATE_PRODUCT } from "../ActionTypes"
 
 const handleLoading = () => (dispatch) => {
@@ -12,32 +11,26 @@ const handleError = (error) => (dispatch) => {
 
 export const getProduct = () => async (dispatch) => {
     try {
-        // dispatch(handleLoading()) 
-        await axios.get("localhost:8000/api/v1/products/list-products")
+        dispatch(handleLoading())
+        await axios.get("http://localhost:8000/api/v1/products/list-products")
             .then((response) => {
-
-                setTimeout(() => {
-                    dispatch({ type: GET_PRODUCT, payload:response.data })
-                }, 2000)
-                console.log(response.data);
+                dispatch({ type: GET_PRODUCT, payload: response.data.data })
             })
             .catch((error) => {
-                // dispatch(handleError(error.message))
+                dispatch(handleError(error.message))
             })
     } catch (error) {
-        // dispatch(handleError(error.message))
+        dispatch(handleError(error.message))
     }
 }
 
-
-
-export const addProduct = (data) => async (dispatch) => {
+export const addProduct = (product) => async (dispatch) => {
     dispatch(handleLoading())
     try {
-        await axios.post("localhost:8000/api/v1/products/add-products", data)
+        await axios.post("http://localhost:8000/api/v1/products/add-products", product)
             .then((response) => {
                 console.log(response.data);
-                dispatch({ type: ADD_PRODUCT, payload: response.data })
+                dispatch({ type: ADD_PRODUCT, payload: response.data.data })
             })
             .catch((error) => {
                 dispatch(handleError(error.message))
@@ -50,7 +43,7 @@ export const addProduct = (data) => async (dispatch) => {
 export const deleteProduct = (id) => async (dispatch) => {
     dispatch(handleLoading())
     try {
-        await axios.delete("localhost:8000/api/v1/products/delete-products/" + id)
+        await axios.delete(`http://localhost:8000/api/v1/products/delete-products/${id}`)
             .then(dispatch({ type: DELETE_PRODUCT, payload: id }))
             .catch((error) => {
                 dispatch(handleError(error.message))
@@ -60,12 +53,12 @@ export const deleteProduct = (id) => async (dispatch) => {
     }
 }
 
-export const editProduct = (data) => async (dispatch) => {
+export const editProduct = (product) => async (dispatch) => {
     dispatch(handleLoading())
     try {
-        await axios.put("localhost:3000/api/v1/products/update-products/" + data._id, data)
+        await axios.put(`http://localhost:8000/api/v1/products/update-products/${product._id}`, product)
             .then((response) => {
-                dispatch({ type: UPDATE_PRODUCT, payload: data })
+                dispatch({ type: UPDATE_PRODUCT, payload: response.data.data })
             })
             .catch((error) => {
                 dispatch(handleError(error.message))
