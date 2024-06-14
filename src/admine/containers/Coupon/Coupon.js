@@ -94,7 +94,7 @@ function Coupon(props) {
     const columns = [
         { field: 'coupon_name', headerName: 'Coupon Name', width: 170 },
         { field: 'percentage', headerName: 'Discount Percentage', width: 170 },
-        { field: 'expiry_Date', headerName: 'Expiry Date', width: 170 },
+        { field: 'expiry_Date', headerName: 'Expiry Date', width: 170},
         {
             field: 'Action',
             headerName: 'Action',

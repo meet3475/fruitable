@@ -122,7 +122,7 @@ function Review(props) {
                                             onBlur={handleBlur}
                                             value={values.email}
                                         />
-                                        {errors.email && touched.email ? <span style={{ color: "red" }}>{errors.email}</span> : null}
+                                        {errors.email && touched.email ? <span>{errors.email}</span> : null}
                                     </div>
                                 </div>
                                 <div className="col-lg-12">
