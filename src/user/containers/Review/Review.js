@@ -28,7 +28,7 @@ function Review(props) {
 
     const reviews = useSelector(state => state.reviews)
 
-  
+
     let shopDetailSchema = object({
         name: string().required(),
         email: string().required(),
